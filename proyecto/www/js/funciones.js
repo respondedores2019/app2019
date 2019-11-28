@@ -1,3 +1,4 @@
+//lala
 function validarInfo(info)
 {
     for (var jj=1;jj<nroNuevoPasoE;jj++)
