@@ -1,0 +1,104 @@
+@CHARSET "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Rye&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+#ima
+{
+    margin-top:5vh;
+    margin-left:20vw;
+    width:60vw;
+    height: 40vh;   
+}
+.oculto
+{
+ 	display:none;
+	visibility:hidden;
+}
+.visible
+{
+    display:block;
+	visibility:visible;
+}
+.botonAdmin
+{
+    margin-top:10vh;
+    margin-bottom:10vh;
+    width:60vw;
+    margin-left:auto;
+    margin-right:auto;
+}
+.botonInicio
+{
+    margin-top:5vh;
+    width:60vw;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#tit
+{
+    font-size:5vh;
+    margin-top:10vh;
+    text-align:center;
+    /*font-family: 'Rye', cursive;*/
+   font-family: 'Bungee Inline', cursive;
+}
+.fondo
+{
+    background-color:white;
+}
+#masPaso
+{
+    width:27vw;
+    margin-left:auto;
+    margin-right:2vw;
+}
+.iconopanel
+{
+    margin-right:2vw;
+}
+
+.demo-swiper {
+  margin: 0px 0 35px;
+  font-size: 30px;
+  height: 85vh;
+}
+.e
+{
+   /* margin-bottom:100vh;  */
+    padding-top: 5vh;
+    padding-right: 5vh;
+    padding-left: 8vh;
+    text-align: center;
+   font-family: 'Rubik', sans-serif;
+   height:30vh;
+}
+.itemsConsulta
+{
+    white-space: normal;
+    height: 30px !important;
+    overflow: visible !important;
+}
+.listado
+{
+    margin:0px 0px !important;
+}
+.prev , .next
+{
+  margin-top: 30vh;
+}
+.col33
+{
+    width:30%;
+}
+.espacio 
+{
+    margin-bottom: 3vh;
+}
+.play {
+    
+    margin-left: 30vw;
+    margin-right: 30vw;
+    margin-top: 30vh;
+    color:white;
+}

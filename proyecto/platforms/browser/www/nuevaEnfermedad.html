@@ -1,0 +1,62 @@
+<div class="page" data-name="nuevaEnfermedad">
+    <div class="navbar">
+        <div class="navbar-inner sliding">
+          <div class="left">
+                <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="ios-only">Back</span>
+                </a>
+            </div>
+             <div class="title">Primeros respondedores</div>
+            <div class="right">
+                <a class="panel-open" href="#" data-panel="right">
+                    <i class="fas fa-bars iconopanel"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="list no-hairlines-md">
+            <ul id="agregarpasos">
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Titulo enfermedad</div>
+                    <div class="item-input-wrap">
+                      <input type="text" placeholder="Titulo" id="tituloE">
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input espacio top " id="paso0">
+                  <div class="item-inner " >
+                    <div>
+                        <div class="item-title item-label">Texto </div>
+                        <button class=" button button-small button-fill eliminarPaso" id="0">Eliminar</button>      
+                    </div>
+                    <div class="item-input-wrap">
+                        <textarea placeholder="Ingrese texto que va aparecer en el paso" id="textoenfermedad0" class="resizable textoPrueba"  ></textarea>
+                        <span class="input-clear-button"></span>
+                        <div class="oculto textoerror" id="errortextoenfermedad0" >Completar este campo.</div>
+                    </div>
+                    <div class="item-title item-label">Audio </div>
+                    <div class="item-input-wrap bordeinferior">
+                      <input type="file" class="audios" name="audio0" id="audio0" disabled >     
+                      <span class="input-clear-button"></span>
+                      <div class="oculto textoerror" id="erroraudio0" >Completar este campo.</div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+        </div>
+        <div class="list no-hairlines-md">
+            <ul>
+                <li class="item-content item-input">
+                    <button class=" button button-small button-fill masPaso" id="masPaso">Mas Pasos</button> 
+                </li>
+                <li class="item-content item-input">
+                    <button class=" button button-small button-fill botonInicio" id="guardarEnfermedad">Guardar enfermedad</button> 
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
