@@ -53,6 +53,8 @@ function guardarEditar(info,catV,catN)
 {
     var arre=[];
     var bd=firebase.firestore();
+    var storageService = firebase.storage();
+    var storageRef = storageService.ref();
     var cont=1;
     var enf=bd.collection('subcatalogo').doc(info);
     enf.get()
@@ -88,9 +90,21 @@ function guardarEditar(info,catV,catN)
             if(arregloEliminarE.indexOf(jj)===-1) // noesta en el arreglo
             {             
                 var paso=$$('#textoPaso'+jj).val();                        
-                if($$('#audio'+jj).hasClass('visible')===true) // falta eliminar el audio viejo del storage
+                if($$('#audio'+jj).hasClass('visible')===true)
                 {
-                    var url=document.getElementById('audio'+jj).files[0];
+                    var audioBd2=String($$('#audrep'+jj).attr('src'));
+                    var nue=generarUrl(audioBd2);
+                    var nueva= info+'/'+nue;
+                    var desertRef = storageRef.child(nueva);   
+                    desertRef.delete()
+                    .then(function() {
+                        console.log('eliminado');
+                    })
+                    .catch(function(error) {
+                   
+                        console.log('error'+error);
+                    }); 
+                    var url=document.getElementById('audio'+jj).files[0];                 
                     getFileName(url,cont,info);  
                 }
                 else
@@ -109,33 +123,54 @@ function guardarEditar(info,catV,catN)
                         bd.collection('subcatalogo').doc(info).collection('Audios').doc(nroDoc).set(dataAud);                    
                     }           
                 }
-                if($$('#imagen'+jj).hasClass('visible')===true) // falta eliminar imagen viejo del storage
+                if($$('#imagen'+jj).hasClass('visible')===true) 
                 {
                     if(document.getElementById('imagen'+jj).files.length !== 0) 
                     {
-                        console.log("entre 1");
-                        console.log("j:"+jj);
+                        var img=String($$('#imgrep'+jj).attr('src'));
+                        var nuee=generarUrl(img);
+                        var nuevaa= info+'/'+nuee;
+                        var desertRef1 = storageRef.child(nuevaa);
+                        desertRef1.delete()
+                        .then(function() {
+                            console.log('eliminado');
+                        })
+                        .catch(function(error) {
+                            console.log('error'+error);
+                        }); 
                         var url1=document.getElementById('imagen'+jj).files[0];
-                        getFileFoto(url1,cont);  
+                        getFileFoto(url1,cont,info);  
+                    }
+                    else
+                    {
+                        if($$('#imgrep'+jj).hasClass('oculto')===true) 
+                        {
+                            var img=String($$('#imgrep'+jj).attr('src'));
+                            var nuee1=generarUrl(img);
+                            var nuevaa1= info+'/'+nuee1;
+                            var desertRef2 = storageRef.child(nuevaa1);
+                            desertRef2.delete()
+                            .then(function() {
+                                console.log('eliminado');
+                            })
+                            .catch(function(error) {
+                                console.log('error'+error);
+                            }); 
+                        }
                     }
                 }
                 else
                 {
                     if($$('#imagen'+jj).hasClass('nuevoPaso')===true)
                     {
-                        console.log("entre 2");
-                         console.log("j:"+jj);
-                         if(document.getElementById('imagen'+jj).files.length !== 0) 
+                        if(document.getElementById('imagen'+jj).files.length !== 0) 
                         {
                             var url3=document.getElementById('imagen'+jj).files[0];
-                            getFileFoto(url3,cont);   
+                            getFileFoto(url3,cont,info);   
                         }
-
                     }
                     else
                     {
-                        console.log("enter 3");
-                         console.log("j:"+jj);
                         var fotoBD=String($$('#imgrep'+jj).attr('src'));
                         var datafoto={
                             valor:fotoBD,
@@ -170,31 +205,28 @@ function guardarEditar(info,catV,catN)
                 cat2.get()
                 .then(function(doc2){
                     doc2.data().Titulos.forEach(function(element){
-                              console.log("elee  "+element);
-                              arre.push(element);
-                              });
-                             arre.push(info);
-                             arre.sort();
-                             for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  cat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
-                                    }); 
-                              }
-                              for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  cat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayUnion(arre[i])
-                                    }); 
-                              }
+                        arre.push(element);
                     });
-                    cat2.update({
-                        cantidad:firebase.firestore.FieldValue.increment(1)
-                    });
-                })
-             .catch(function(error){
+                    arre.push(info);
+                    arre.sort();
+                    for(var i=0;i<arre.length;i++)
+                    {
+                        cat2.update({
+                            Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
+                        }); 
+                    }
+                    for(var ii=0;ii<arre.length;ii++)
+                    {
+                        cat2.update({
+                            Titulos:firebase.firestore.FieldValue.arrayUnion(arre[ii])
+                        }); 
+                    }
+                });
+                cat2.update({
+                    cantidad:firebase.firestore.FieldValue.increment(1)
+                });
+            })
+            .catch(function(error){
                 console.log('Error al saber la cnatidad del catalogo ',error);
             });               
         }
@@ -204,25 +236,22 @@ function guardarEditar(info,catV,catN)
             ccat2.get()
             .then(function(doc){
                 doc.data().Titulos.forEach(function(element){
-                              console.log("elee  "+element);
-                              arre.push(element);
-                              });
-                             arre.push(info);
-                             arre.sort();
-                             for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  ccat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
-                                    }); 
-                              }
-                              for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  ccat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayUnion(arre[i])
-                                    }); 
-                              }
+                    arre.push(element);
+                });
+                arre.push(info);
+                arre.sort();
+                for(var jji=0;jji<arre.length;jji++)
+                {               
+                    ccat2.update({
+                        Titulos:firebase.firestore.FieldValue.arrayRemove(arre[jji])
+                    }); 
+                }
+                for(var ji=0;ji<arre.length;ji++)
+                {                
+                    ccat2.update({
+                        Titulos:firebase.firestore.FieldValue.arrayUnion(arre[ji])
+                    }); 
+                }
             });
         }
         app.dialog.alert('Se han guardado las modificaciones de la enfermedad', 'Confirmacion',function()
@@ -232,187 +261,7 @@ function guardarEditar(info,catV,catN)
         });                    
     }); 
 }
-function guardarNuevoEditar(viejo,nuevo,catV,catN)
-{
-    console.log("may cat6: "+may);
-    var arre=[];
-    var bd=firebase.firestore();
-  //  bd.collection('subcatalogo').doc(viejo).delete()
- //   .then(function(){
-        var cont=1;
-        var enf=bd.collection('subcatalogo').doc(nuevo);
-        enf.get()
-        .then(function(doc){
-            console.log("nro de pasos total nuevos: "+nroNuevoPasoE);
-            for (var jj=1;jj<nroNuevoPasoE;jj++)
-            {
-                var nroDoc=String(cont);
-                if(arregloEliminarE.indexOf(jj)===-1) // noesta en el arreglo
-                {
-                    var paso=$$('#textoPaso'+jj).val();                      
-                    if($$('#audio'+jj).hasClass('visible')===true) // es audio nuevo FALTA eliminar el audio viejo del storage
-                    {
-                        var url=document.getElementById('audio'+jj).files[0];
-                        getFileName(url,cont,nuevo);  
-                    }
-                    else
-                    {
-                        if($$('#audio'+jj).hasClass('nuevoPaso')===true) // audio nuevo de paso nuevo
-                        {
-                            var url2=document.getElementById('audio'+jj).files[0];
-                            getFileName(url2,cont,nuevo);   
-                        }
-                        else // audio viejo  /// ANALIZAR PORQUE CREO UN STORAGEN NUEVO SI CAMBIO EL PUTO NOMBRE
-                        // SOLUCION 1: CAMBIAR NOMBRE DE LA CARPETA
-                        // SOLUCION 2: COPIAR CARPETA A LA NUEVA CARPETA    
-                        {
-                            var audioBd=String($$('#audrep'+jj).attr('src'));                                     
-                            var dataAud={
-                                valor:audioBd,
-                            };
-              var url22=document.getElementById('audio2'+jj).value;
-              // var nombre=generarUrl(url22);
-              var nombre="";
-                            getAudio(url22,nuevo,nombre);
-                
-                      //      bd.collection('subcatalogo').doc(nuevo).collection('Audios').doc(nroDoc).set(dataAud);                    
-                        }           
-                    }
-                    // im agen
-                    if($$('#imagen'+jj).hasClass('visible')===true) // falta eliminar imagen viejo del storage
-                    {
-                        if(document.getElementById('imagen'+jj).files.length !== 0) 
-                        {
-                            console.log("entre 1");
-                            console.log("j:"+jj);
-                            var url1=document.getElementById('imagen'+jj).files[0];
-                            getFileFoto(url1,cont,nuevo);  
-                        }
-                    }
-                    else
-                    {
-                        if($$('#imagen'+jj).hasClass('nuevoPaso')===true)
-                        {
-                            console.log("entre 2");
-                             console.log("j:"+jj);
-                             if(document.getElementById('imagen'+jj).files.length !== 0) 
-                            {
-                                var url3=document.getElementById('imagen'+jj).files[0];
-                                getFileFoto(url3,cont,nuevo);   
-                            }
-    
-                        }
-                        else
-                        {
-                            console.log("enter 3");
-                             console.log("j:"+jj);
-                            var fotoBD=String($$('#imgrep'+jj).attr('src'));
-                            var datafoto={
-                                valor:fotoBD,
-                            };
-                            bd.collection('subcatalogo').doc(nuevo).collection('Imagenes').doc(nroDoc).set(datafoto);                    
-                        }           
-                    }
-                    
-                    var data={
-                        valor:paso,
-                    };
-                    bd.collection('subcatalogo').doc(nuevo).collection('Pasos').doc(nroDoc).set(data);
-                    cont++;                              
-                }
-            }
-            var data1={
-                cantidad:cont-1
-            };
-            bd.collection('subcatalogo').doc(nuevo).set(data1); 
-            if(catV!==catN)// si el nombre de la categoria vieja es distinta de la seleccionada
-            {   
-                var ccat=bd.collection('catalogo').doc(catV);
-                ccat.update({
-                    Titulos:firebase.firestore.FieldValue.arrayRemove(viejo)
-                });
-                ccat.get().then(function(doc){
-                    var cantidad=doc.data().cantidad;
-                    var data4={
-                        cantidad:cantidad-1  
-                    };
-                    ccat.update(data4);
-                    var cat2=bd.collection('catalogo').doc(catN);
-                    cat2.get()
-                    .then(function(doc2){
-                        doc2.data().Titulos.forEach(function(element){
-                              console.log("elee  "+element);
-                              arre.push(element);
-                              });
-                             arre.push(nuevo);
-                             arre.sort();
-                             for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  cat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
-                                    }); 
-                              }
-                              for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  cat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayUnion(arre[i])
-                                    }); 
-                              }
-                    });
-                    cat2.update({
-                        cantidad:firebase.firestore.FieldValue.increment(1)
-                    });
-                })
-                .catch(function(error){
-                    console.log('Error al saber la cnatidad del catalogo ',error);
-                }); 
-            }
-            else
-            { 
-                var ccat2=bd.collection('catalogo').doc(catV);
-               ccat2.update({
-                   Titulos:firebase.firestore.FieldValue.arrayRemove(viejo)
-               });
-               ccat2.get()
-                .then(function(doc){
-                    doc.data().Titulos.forEach(function(element){
-                              console.log("elee  "+element);
-                              arre.push(element);
-                              });
-                             arre.push(nuevo);
-                             arre.sort();
-                             for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  ccat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
-                                    }); 
-                              }
-                              for(var i=0;i<arre.length;i++)
-                              {
-                                  console.log("arreglo "+arre[i]);
-                                  ccat2.update({
-                                    Titulos:firebase.firestore.FieldValue.arrayUnion(arre[i])
-                                    }); 
-                              }
-                });
 
-            }
-            app.dialog.alert('Se han guardado las modificaciones de la enfermedad', 'Confirmacion',function()
-            {
-                arregloEliminarE=[];
-                mainView.router.navigate("/homeAdmin/");
-             }); 
-             bd.collection('subcatalogo').doc(viejo).delete()
-    .then(function(){ console.log("elimine");});
-        });       
-   /* })
-    .catch(function(error){
-        console.log('Error al eliminar la enfermedad ',error);
-    });  */
-}
 function cargarInfoEnfermedad(info)
 {
     var bd=firebase.firestore();
@@ -441,11 +290,11 @@ function cargarInfoEnfermedad(info)
                 bd.collection('subcatalogo').doc(info).collection('Imagenes').get()
                 .then(function(querySnapshot){
                     querySnapshot.forEach(function(doc){
-                    var num=doc.id -1;
-                    arregloImagenes.splice(num,0,doc.data().valor);
+                        var num=doc.id -1;
+                        arregloImagenes.splice(num,0,doc.data().valor);
                     });
-                    
-                    $$('#tituloEditar').append('<div class="card-header"><b>Titulo</b></div><div class="card-content card-content-padding"><div class="row"><input type="text" id="tituloE" class="colorFondo col-75" value="'+info+'" disabled/><span class="input-clear-button"></span><div class="oculto textoerror" id="errorTitulo" >La cantidad de caracteres debe ser menor a 40.</div><div class="item-media"><a id="ediTit" class="col-10 visible" ><i class="fas fa-edit"></i></a></div></div></br><div class="row"><b>Categoria:</b></br><div class="item-input-wrap input-dropdown-wrap"><select id="idCat"></select></div></div></div>');                 
+
+                    $$('#tituloEditar').append('<div class="card-header"><b>Titulo</b></div><div class="card-content card-content-padding"><div class="row"><input type="text" id="tituloE" class="colorFondo col-75" value="'+info+'" disabled/></div></br><div class="row"><b>Categoria:</b></br><div class="item-input-wrap input-dropdown-wrap"><select id="idCat"></select></div></div></div>');                 
                     bd.collection('catalogo').get()
                     .then(function(querySnapshot){
                         querySnapshot.forEach(function(doc){
@@ -459,124 +308,48 @@ function cargarInfoEnfermedad(info)
                             }
                         });
                     }); 
-                    $$('#ediTit').on('click',function(){
-                        titOriginal=$$('#tituloE').val();
-                        $$('#tituloE').prop('disabled', false);
-                        $$('#tituloE').removeClass('colorFondo');
-                    });
+                    
                     for(var j=0;j<=cantidad-1;j++)
                     {
                         var i=j+1;
-                         if(arregloImagenes[j]===undefined)
-                         {
-                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-75" disabled>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10" ><i class="fas fa-edit"></i></a></div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><input type="file" class="audios2 " name="audio2'+i+'" id="audio2'+i+'" value=""><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo debe tener formato jpg, jpge o png.</div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
+                        if(arregloImagenes[j]===undefined)
+                        {
+                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-75" disabled>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10" ><i class="fas fa-edit"></i></a></div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo debe tener formato jpg, jpge o png.</div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
                         }
-                         else
-                         {
-                              $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-75" disabled>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10" ><i class="fas fa-edit"></i></a></div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><input type="file" class="audios2" name="audio2'+i+'" id="audio2'+i+'" value=""><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" class="imagenes oculto" name="imagen'+i+'" id="imagen'+i+'"><img src="'+arregloImagenes[j]+'" id="imgrep'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo debe tener formato jpg, jpge o png.</div><div class="item-media visible"  id="botoneditarImg'+i+'"><a href="#" id="imgedi'+i+'" class="editarImagen col-10 " ><i class="fas fa-edit"></i></a> </div>		<div class="item-media visible"  id="botonelImg'+i+'"><a href="#" id="imgel'+i+'" class="eliminarImagen col-10 " ><i class="fas fa-trash-alt"></i></a> </div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
-                         }
-                         $$("#audio2"+i).attr("value",arregloAudios[j]);
+                        else
+                        {
+                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-75" disabled>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10" ><i class="fas fa-edit"></i></a></div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" class="imagenes oculto" name="imagen'+i+'" id="imagen'+i+'"><img src="'+arregloImagenes[j]+'" id="imgrep'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo debe tener formato jpg, jpge o png.</div><div class="item-media visible"  id="botoneditarImg'+i+'"><a href="#" id="imgedi'+i+'" class="editarImagen col-10 " ><i class="fas fa-edit"></i></a> </div>		<div class="item-media visible"  id="botonelImg'+i+'"><a href="#" id="imgel'+i+'" class="eliminarImagen col-10 " ><i class="fas fa-trash-alt"></i></a> </div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
+                        } 
                     }
+                    
                     $$('#botonesExtra').append('<div class="list no-hairlines-md"><ul><li class="item-content item-input"><button class=" button button-small button-fill masPaso" id="masPaso">Mas Pasos</button> </li><li class="item-content item-input"><button class=" button button-small button-fill botonInicio" id="guardarEnfermedad">Guardar enfermedad</button> </li></ul></div>');
                     $$('#guardarEnfermedad').on('click',function(){
-                        if($$('#tituloE').prop('disabled')===false) // esta habilitado
+                        validarInfo(info);
+                        var band2=false; 
+                        for(var j=0;j<nroNuevoPasoE;j++)
                         {
-                            var minu=$$('#tituloE').val().toLowerCase();
-                            var titulito=minu.charAt(0).toUpperCase() + minu.slice(1);
-                            validarTitulo(titulito);
-                            console.log("TITULO ORITINGLA; "+titOriginal +" TITULO NUEVO "+titulito);
-                            if(titOriginal!==titulito) // distintos nombres de titulos
-                            {                            
-                                bd.collection('subcatalogo').doc(titulito).get()
-                                .then(function(doc){
-                                    if(!doc.exists) // nuevo nombre
-                                    {
-                                        validarInfo(info);
-                                        var band=false; //falta validar que no este vacio
-                                        for(var j=0;j<nroNuevoPasoE;j++)
-                                        {
-                                            console.log("ni idea adentro de 423 "+arregloEliminarE.length);
-                                            if(arregloEliminarE.indexOf(j)===-1) // noesta en el arreglo
-                                            {
-                                                if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#error2textoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error2audio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') )
-                                                {
-                                                    band=true;
-                                                }
-                                            }
-                                        }
-                                        if(band===false)
-                                        {
-                                             guardarNuevoEditar(titOriginal,titulito,may,$$('#idCat').val() );
-                                        }
-                                        else
-                                        {
-                                              app.dialog.alert('Verificar datos','Error');
-                                        }
-                                    }
-                                    else
-                                    {
-                                        app.dialog.alert('Ya existe una enfermedad con ese nombre','Error');
-                                    }
-                                }) 
-                                .catch(function(error){
-                                    console.log('Error al recuperar los datos de la base de subcatalogos',error);
-                                });
-                            }
-                            else // iguales titulos
+                            if(arregloEliminarE.indexOf(j)===-1) // noesta en el arreglo
                             {
-                                validarInfo(info);
-                                 var band2=false; //falta validar que no este vacio
-                                 for(var j=0;j<nroNuevoPasoE;j++)
-                                 {
-                                    if(arregloEliminarE.indexOf(j)===-1) // noesta en el arreglo
-                                    {
-                                        if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#error2textoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error2audio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') )
-                                        {
-                                            band2=true;
-                                        }
-                                    }
-                                }
-                                if(band2===false)
+                                if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#error2textoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error2audio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') )
                                 {
-                                    guardarEditar(info,may,$$('#idCat').val());
+                                    band2=true;
                                 }
-                                else
-                                {
-                                    app.dialog.alert('Verificar datos','Error');
-                                } 
                             }
                         }
-                        else // no esta habilitado
+                        if(band2===false)
                         {
-                            validarInfo(info);
-                            var band3=false; //falta validar que no este vacio
-                            for(var j=0;j<nroNuevoPasoE;j++)
-                            {
-                                 if(arregloEliminarE.indexOf(j)===-1) // noesta en el arreglo
-                                 {
-                                     if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#error2textoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error2audio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') )
-                                     {
-                                        band3=true;
-                                     }
-                                 }
-                            }
-                            if(band3===false)
-                            {
-                                   guardarEditar(info,may,$$('#idCat').val());
-                            }
-                            else
-                            {
-                                app.dialog.alert('Verificar datos','Error');
-                            } 
+                            guardarEditar(info,may,$$('#idCat').val());
                         }
-                        
+                        else
+                        {
+                            app.dialog.alert('Verificar datos','Error');
+                        } 
                     });
                     $$('#masPaso').on('click',function(){
                         $$('#pasosEditar').append('<div class="card" id="paso'+nroNuevoPasoE+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea placeholder="Ingrese el texto del paso" id="textoPaso'+nroNuevoPasoE+'" class="colorFondo"></textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+nroNuevoPasoE+'" >La cantidad de caracteres debe ser menor a 170.</div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" class="audios nuevoPaso" name="audio'+nroNuevoPasoE+'" id="audio'+nroNuevoPasoE+'"><div class="oculto textoerror" id="erroraudio'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+nroNuevoPasoE+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+nroNuevoPasoE+'" >El archivo debe durar menos de 30 segundos.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" class="imagenes nuevoPaso"  " name="imagen'+nroNuevoPasoE+'" id="imagen'+nroNuevoPasoE+'"><div class="oculto textoerror" id="errorimagen'+nroNuevoPasoE+'" >El archivo debe tener formato jpg, jpge o png.</div></div><div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+nroNuevoPasoE+'">Eliminar</button></div></div>');
                         nroNuevoPasoE++;
                         $$('.eliminarPaso').on('click',function(){ 
-                            var id= parseInt(this.id);
-                            console.log("eliminar adentro mas "+id);
+                            var id= parseInt(this.id);  
                             arregloEliminarE.push(id);
                             $$('#paso'+id).remove();
                         });
@@ -609,7 +382,6 @@ function cargarInfoEnfermedad(info)
                     });
                     $$('.eliminarPaso').on('click',function(){
                         var id= parseInt(this.id);
-                        console.log("id eli "+id);
                         arregloEliminarE.push(id);
                         $$('#paso'+id).remove();
                     });
@@ -626,9 +398,7 @@ function cargarInfoEnfermedad(info)
                         $$('#imagen'+id).removeClass('oculto').addClass('visible');
                         $$('#botonelImg'+id).removeClass('visible').addClass('oculto');
                         $$('#botoneditarImg'+id).removeClass('visible').addClass('oculto');
-                      
                     });
-                    
                 });
             })
             .catch(function(error){
@@ -646,7 +416,6 @@ function cargarInfoEnfermedad(info)
 
 function nuevaEnfermedad(i)
 {
-
     var arre=[];
     var bd=firebase.firestore();
     var cont=1; //para que el doc se llame consecutivo
@@ -659,84 +428,74 @@ function nuevaEnfermedad(i)
     .then(function(doc){
         if(!doc.exists)    
         {
-                if(tipo==1) // es una subcategoria
-                {
-                    console.log("es una subcategoria");
-                    var cat=$$('#idCat').val();
-                    console.log("cat :"+cat);  
-                    var catalogo=bd.collection('catalogo').doc(cat);
-                    catalogo.get()
-                    .then(function(doc){
-                        var cc=doc.data().cantidad+1;
-                        var cant={
-                            cantidad:cc
-                        };
-                        catalogo.update(cant);
-                        doc.data().Titulos.forEach(function(element){
-                              arre.push(element);
-                        });
-                        arre.push(mayTitulo);
-                        arre.sort();
-                        for(var i=0;i<arre.length;i++)
-                        {
-                            console.log("arreglo "+arre[i]);
-                            catalogo.update({
-                                Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
-                            }); 
-                        }
-                        for(var i=0;i<arre.length;i++)
-                        {
-                            console.log("arreglo "+arre[i]);
-                            catalogo.update({
-                                Titulos:firebase.firestore.FieldValue.arrayUnion(arre[i])
-                            }); 
-                        }                             
-                    });
-                }
-                else // es una categoria
-                {
-                    console.log("es una categoria");
-                    var data={
-                        Titulos:[mayTitulo],
-                        cantidad:1,
+            if(tipo==1) // es una subcategoria
+            {   
+                var cat=$$('#idCat').val();
+                var catalogo=bd.collection('catalogo').doc(cat);
+                catalogo.get()
+                .then(function(doc){
+                    var cc=doc.data().cantidad+1;
+                    var cant={
+                        cantidad:cc
                     };
-                    bd.collection('catalogo').doc(mayTitulo).set(data);
-                }
-            
-                for (var j=1;j<i;j++)
-                {
-                    if(arregloEliminarN.indexOf(j)===-1) // noesta en el arreglo
-                    {
-                        var paso=$$('#textoenfermedad'+j).val();   
-                        console.log("paso: "+paso);
-                        var url=document.getElementById('audio'+j).files[0];
-                        console.log(url);
-                         getFileName(url,cont,titulo);
-                        if(document.getElementById('imagen'+j).files.length !== 0) 
-                        {
-                            console.log("imagen: "+document.getElementById('imagen'+j).files[0]);
-                            var foto=document.getElementById('imagen'+j).files[0];
-                            getFileFoto(foto,cont,titulo);
-                        }
-                                               
-                        var data1={
-                            valor:paso,
-                        };
-                        var nroDoc=String(cont);
-                        bd.collection('subcatalogo').doc(mayTitulo).collection('Pasos').doc(nroDoc).set(data1).then(function() {
-                            console.log("Document successfully written!");
-                        });
-                        cont++;
+                    catalogo.update(cant);
+                    doc.data().Titulos.forEach(function(element){
+                        arre.push(element);
+                    });
+                    arre.push(mayTitulo);
+                    arre.sort();
+                    for(var i=0;i<arre.length;i++)
+                    {              
+                        catalogo.update({
+                            Titulos:firebase.firestore.FieldValue.arrayRemove(arre[i])
+                        }); 
                     }
-                }            
-                var data11={
-                    cantidad:cont-1
-                };
-                bd.collection('subcatalogo').doc(mayTitulo).set(data11);
-                app.dialog.alert('Se ha cargado una nueva enfermedad', 'Confirmacion',function()
-                {
-                    mainView.router.navigate("/homeAdmin/");
+                    for(var ji=0;ji<arre.length;ji++)
+                    {
+                        catalogo.update({
+                            Titulos:firebase.firestore.FieldValue.arrayUnion(arre[ji])
+                        }); 
+                    }                             
                 });
+            }
+            else // es una categoria
+            {      
+                var data={
+                    Titulos:[mayTitulo],
+                    cantidad:1,
+                };
+                bd.collection('catalogo').doc(mayTitulo).set(data);
+            }
+            for (var j=1;j<i;j++)
+            {
+                if(arregloEliminarN.indexOf(j)===-1) // noesta en el arreglo
+                {
+                    var paso=$$('#textoenfermedad'+j).val();       
+                    var url=document.getElementById('audio'+j).files[0];
+                    getFileName(url,cont,titulo);
+                    if(document.getElementById('imagen'+j).files.length !== 0) 
+                    {           
+                        var foto=document.getElementById('imagen'+j).files[0];
+                        getFileFoto(foto,cont,titulo);
+                    }                               
+                    var data1={
+                        valor:paso,
+                    };
+                    var nroDoc=String(cont);
+                    bd.collection('subcatalogo').doc(mayTitulo).collection('Pasos').doc(nroDoc).set(data1).then(function() {
+                        console.log("Document successfully written!");
+                    });
+                    cont++;
+                }
+            }            
+            var data11={
+                cantidad:cont-1
+            };
+            bd.collection('subcatalogo').doc(mayTitulo).set(data11);
+            app.dialog.alert('Se ha cargado una nueva enfermedad', 'Confirmacion',function()
+            {
+                mainView.router.navigate("/homeAdmin/");
+            });
         }
         else
         {
@@ -746,9 +505,6 @@ function nuevaEnfermedad(i)
 }
 function getFileFoto(fileInput,cont,titulo2)
 {
-    console.log("adentro de getfilefoto");
-    console.log("file: "+fileInput);
-    console.log("conta: "+cont);
     var storageService = firebase.storage();
     var bd=firebase.firestore();
     var titulo=titulo2;
@@ -779,34 +535,10 @@ function getFileFoto(fileInput,cont,titulo2)
         });
     });
 }
-function getAudio(fileInput,titulo,nombre) 
-{
-    console.log("anto");
-    console.log("file: "+fileInput);
-       var storageService = firebase.storage();
-        var minu=titulo.toLowerCase();
-    var mayTitulo=minu.charAt(0).toUpperCase() + minu.slice(1);
-        var file = fileInput;
-        var fileName = file.name;
-        var storageRef = storageService.ref();
-        var lal=storageRef.child(mayTitulo+'/'+fileName);
-        var uploadTask = lal.putString(file);
-        uploadTask.on('state_changed',null,function(error){
-            console.log('Error al subir archivo',error)
-        }, function(){
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
-                console.log("sabri");
-            });
-            console.log("subida completa");
-        });
-
-}
-
 function getFileName(fileInput,cont,titulo) 
 {
     var storageService = firebase.storage();
     var bd=firebase.firestore();
-    var titulo=$$('#tituloE').val();
     var minu=titulo.toLowerCase();
     var mayTitulo=minu.charAt(0).toUpperCase() + minu.slice(1);
     var enf=bd.collection('subcatalogo').doc(mayTitulo);
@@ -833,7 +565,6 @@ function getFileName(fileInput,cont,titulo)
         });
     });
 }
-
 function cerrarSesion()
 {
      firebase.auth().signOut()
@@ -927,7 +658,6 @@ function guardarTitulo()
 }
 function validarTitulo(cat)
 {
-    
     if(cat.length>40)
     {
         $$('#errorTitulo').removeClass('oculto');
@@ -945,7 +675,6 @@ function guardarCategoria()
     var cat=$$('#titCategoria').val();
     var minu=cat.toLowerCase();
     var mayTitulo=minu.charAt(0).toUpperCase() + minu.slice(1);
-    console.log("cate: "+mayTitulo);
     bd.collection('catalogo').doc(mayTitulo).get()
     .then(function(doc){
         if(!doc.exists)
@@ -971,8 +700,6 @@ function guardarCategoria()
 }
 function eliminoVacios(h)
 {
-    
-    console.log("dentro de funcion elimino");
     var bd=firebase.firestore();
     bd.collection('catalogo').where('cantidad','==',0).get()
     .then(function(querySnapshot){
@@ -980,7 +707,6 @@ function eliminoVacios(h)
             bd.collection('catalogo').doc(doc.id).delete();       
             console.log("eliminado");
         }); 
-         
         cargaBusqueda(h);
     })
     .catch(function(error){
@@ -989,29 +715,24 @@ function eliminoVacios(h)
 }
 function cargaBusqueda(h) 
 {
-    console.log("h: "+h);
-
     var bd=firebase.firestore();
     bd.collection('catalogo').get()
     // bd.collection('catalogo')
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc){
           //.onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
-          //  snapshot.docChanges().forEach(function(change) {
-            console.log("titulos principales: "+doc.id);
-            console.log("cant: "+doc.data().Titulos.length);
+          //  snapshot.docChanges().forEach(function(change) {        
             var cantidad=doc.data().Titulos.length;          
             if(h==="el")
             {
                 if(cantidad===1)
                 {
-                    console.log('titulo '+doc.data().Titulos[0]);
                     if(doc.data().Titulos[0] !==doc.id)
                     {  //si el nombre del boton es muy grande, que se achique la letra
                         $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');             
                         $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                             doc.data().Titulos.forEach(function(element){
-                            console.log("elemento: "+element);
+           
                             $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close popup-open"  data-popup=".popup-eliminar"   id="'+element+'">'+element+'</button></li>');
                         });
                     }
@@ -1025,23 +746,19 @@ function cargaBusqueda(h)
                     $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');             
                     $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                     doc.data().Titulos.forEach(function(element){
-                        console.log("elemento: "+element);
+                       
                         $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close popup-open"  data-popup=".popup-eliminar"   id="'+element+'">'+element+'</button></li>');
                     });
                 }                
             }
             else if(h==="elc")
             {
-                console.log("eliminar categoria");
                  $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminarC"   id="'+doc.id+'">'+doc.id+'</button></div></li>');                                
             }
             else
             {
-                console.log("catalogo: "+doc.id);
-                console.log("cantidad: "+cantidad);
                 if(cantidad===1)
                 {
-                    console.log('titulo '+doc.data().Titulos[0]);
                     if(doc.data().Titulos[0] !==doc.id)
                     {
                         $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');             
@@ -1057,45 +774,36 @@ function cargaBusqueda(h)
                 }
                 else
                 {
-                    
-                    console.log("cantidad mayor a 1");
                     $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');             
                     $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                     doc.data().Titulos.forEach(function(element){
-                        console.log("elementos: "+element);
                         $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
                     });
                 }
             }
         });
-
         $$('.itemsConsulta').on('click',function(){
-            console.log("Id seleccionado: "+this.id);           
+          
             if(h==="h") /* busqueda */
             {
-                console.log("busqueda");
                 enfermedadBusqueda=this.id; 
                 mainView.router.navigate("/enfermedad/");
             }
             else if(h==="e") /* editar enfermedad*/
             {
                 may=this.value;
-                console.log("may: "+may);
                 info=this.id;
                 mainView.router.navigate("/infoEnfermedad/");
             }
             else if(h==="el") /* eliminar enfermedad*/
             {
                 may=this.value;
-                console.log("may: "+may);
                 info=this.id;
-                console.log("eliminar");
                 $$('#nombreEnfermedadEliminar').html(info);
             }
             else if(h==="elc") /* eliminar categoria*/
             {
                 info=this.id;
-                console.log("eliminar");
                 $$('#nombreEnfermedadEliminar').html(info);
             }
         });
@@ -1108,9 +816,7 @@ function eliminarCategoria()
 {
     var bd=firebase.firestore();
     bd.collection('catalogo').doc(info).delete()
-    .then(function(doc){
-        console.log("eliminada la categoria");
-
+    .then(function(){
         app.dialog.alert('Se ha eliminado la categoria', 'Eliminar',function()
         {
             app.popup.close('.popup-eliminarC'); 
@@ -1120,43 +826,31 @@ function eliminarCategoria()
     .catch(function(error){
         console.log('Error al eliminar la categoria',error);
     });
-
 }
 function eliminarImg()
 {
     var bd=firebase.firestore();
     var storageService = firebase.storage();
     var storageRef = storageService.ref();
-    console.log("eliminar img");
-    console.log('infoEli: '+info);
     var sub=bd.collection('subcatalogo').doc(info).collection('Imagenes');
     sub.get()
     .then(function(querySnapshot)
     {
         querySnapshot.forEach(function(doc){
-               
-            console.log('valor '+doc.data().valor); 
-            console.log('id ' +doc.id);
             var url=doc.data().valor;
             var nue=generarUrl(url);
-            var nueva= info+'/'+nue;
-            // Create a reference to the file to delete
-            console.log('nueva: '+nueva);
+            var nueva= info+'/'+nue; 
             var desertRef = storageRef.child(nueva);
-                    // Delete the file
             desertRef.delete()
-            .then(function() {
-                   // File deleted successfully
+            .then(function() {               
                 console.log('eliminado');
             })
             .catch(function(error) {
-              // Uh-oh, an error occurred!
                 console.log('error'+error);
             }); 
         });
     })
     .catch(function(error) {
-          // Uh-oh, an error occurred!
         console.log('error'+error);
     }); 
 }
@@ -1165,30 +859,20 @@ function eliminarAud()
     var bd=firebase.firestore();
     var storageService = firebase.storage();
     var storageRef = storageService.ref();
-    console.log("eliminar aud");
-    console.log('infoEli: '+info);
     var sub=bd.collection('subcatalogo').doc(info).collection('Audios');
     sub.get()
     .then(function(querySnapshot)
     {
         querySnapshot.forEach(function(doc){
-               
-            console.log('valor '+doc.data().valor); 
-            console.log('id ' +doc.id);
             var url=doc.data().valor;
             var nue=generarUrl(url);
             var nueva= info+'/'+nue;
-            // Create a reference to the file to delete
-            console.log('nueva: '+nueva);
-            var desertRef = storageRef.child(nueva);
-                    // Delete the file
+            var desertRef = storageRef.child(nueva);     
             desertRef.delete()
             .then(function() {
-                   // File deleted successfully
                 console.log('eliminado');
             })
             .catch(function(error) {
-              // Uh-oh, an error occurred!
                 console.log('error'+error);
             }); 
         });
@@ -1203,19 +887,15 @@ function eliminar()
     var bd=firebase.firestore();
     var storageService = firebase.storage();
     var storageRef = storageService.ref();
-    console.log('infoEli: '+info);
     var sub=bd.collection('subcatalogo').doc(info);
     sub.get()
     .then(function(doc){
-       
      for(var iik=1;iik<=doc.data().cantidad;iik++)
         {
             var ba=String(iik);
-            
             sub.collection('Pasos').doc(ba).delete();
             sub.collection('Audios').doc(ba).delete();
             sub.collection('Imagenes').doc(ba).delete();
-            
         }
         sub.delete()
         .then(function() {
@@ -1229,37 +909,28 @@ function eliminar()
     .catch(function(error){
         console.log('Error al recuperar los datos de la enfermedad de la base',error);
     });
-   
 }
 function generarUrl(url)
 {
-    console.log('url '+url);
     var n1=url.split('?');
-        var n2=n1[0].split('%2F');
-         console.log('urlVuelta: ' +n2);
-        var n3=n2[1];
-        console.log('urlF: ' +n3);
-        
+    var n2=n1[0].split('%2F');    
+    var n3=n2[1];  
     return n3;
 }
 function eliminar2()
 {
-    console.log("may en eliminar 2: "+may);
     var bd=firebase.firestore();
     var cata=bd.collection('catalogo').doc(may); //elimino el titulo del arreglo de la categoria
     cata.get()        
     .then(function(doc){
         cata.update({
             Titulos: firebase.firestore.FieldValue.arrayRemove(info)
-        });      
-        console.log("cantidad: "+doc.data().cantidad);
+        });           
         var cantTotal=doc.data().cantidad-1;
         var data={
             cantidad:cantTotal
         }
         cata.update(data);
-        console.log("se elimino de cat");
-        console.log("tamaño "+doc.data().Titulos.length);
         app.popup.close('.popup-eliminar'); 
         may=""; //lo pongo en vaciopor si vuelvo a eliminar otra cosa
         app.dialog.alert('Se ha eliminado la enfermedad', 'Eliminar',function()
@@ -1298,107 +969,98 @@ function cargarEnfermedad(enfermedad)
                     var num=doc.id -1;
                     arregloImagenes.splice(num,0,doc.data().valor);
                 });
-            var mySwiper = document.querySelector('.swiper-container').swiper;
-            for(var j=0;j<arregloPasos.length;j++)
-            {
-                if(arregloImagenes[j]===undefined)
+                var mySwiper = document.querySelector('.swiper-container').swiper;
+                for(var j=0;j<arregloPasos.length;j++)
                 {
-                    var k=j+1;
-                    if(arregloPasos.length===1)
+                    if(arregloImagenes[j]===undefined)
                     {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');                    
-                    }
-                    else if(j===0)
-                    {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
-                    }
-                    else if(k===arregloPasos.length)
-                    {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                        var k=j+1;
+                        if(arregloPasos.length===1)
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');                    
+                        }
+                        else if(j===0)
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
+                        }
+                        else if(k===arregloPasos.length)
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                        }
+                        else
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
+                        } 
                     }
                     else
                     {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
-                    } 
+                        var kk=j+1;
+                        if(arregloPasos.length===1)
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');                    
+                        }
+                        else if(j===0)
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
+                        }
+                        else if(kk===arregloPasos.length)
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                        }
+                        else
+                        {
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
+                        } 
+                    }
                 }
-                else
-                {
-                    var kk=j+1;
-                    if(arregloPasos.length===1)
-                    {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');                    
-                    }
-                    else if(j===0)
-                    {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
-                    }
-                    else if(kk===arregloPasos.length)
-                    {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
-                    }
-                    else
-                    {
-                        mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
-                    } 
-                }
-                   
-            }
-            $$('.fotos').on('click',function(){
-                var num=this.id.substr(3);
-                console.log("id: " +num);
-                
-                var photoBrowser = app.photoBrowser.create({
-                  photos: [
-                    arregloImagenes[num]
-                  ],
-                  
+                $$('.fotos').on('click',function(){
+                    var num=this.id.substr(3);
+                    var photoBrowser = app.photoBrowser.create({
+                      photos: [
+                        arregloImagenes[num]
+                      ], 
+                    });
+                    photoBrowser.open();
                 });
-                photoBrowser.open();
-            });
-            $$('.next').on('click',function(){
-                console.log("id: " +this.id);
-                var audio = document.getElementById("audrep"+this.id);
-                var button = document.getElementById('botonn'+this.id);
-                audio.pause();
-                audio.currentTime = 0;
-                button.textContent = "Reproducir";
-                mySwiper.slideNext();
-            });
-            $$('.prev').on('click',function(){
-                 console.log("id: " +this.id);
-                var audio = document.getElementById("audrep"+this.id);
-                var button = document.getElementById('botonn'+this.id);
-                audio.pause();
-                audio.currentTime = 0;
-                button.textContent = "Reproducir";
-                mySwiper.slidePrev();
-            });
-            $$('.play').on('click',function(){     
-                var num=this.id.substr(6);
-                var audio = document.getElementById("audrep"+num);
-                var button = document.getElementById(this.id);
-                if (audio.paused) 
-                {
-                    audio.play();
-                    console.log("reproduciendo");
-                    button.textContent = "Pausar";
-                }
-                else
-                {
+                $$('.next').on('click',function(){
+                    var audio = document.getElementById("audrep"+this.id);
+                    var button = document.getElementById('botonn'+this.id);
                     audio.pause();
-                    console.log("en pausa");
+                    audio.currentTime = 0;
                     button.textContent = "Reproducir";
-                }
-             });
-             $$('.audioPrueba').on('playing',function(){
-                 console.log("reprod");
-             });
-            $$('.audioPrueba').on('ended',function(){
-                 console.log("stop");
-                 var num=this.id.substr(6);
-                  var button = document.getElementById('botonn'+num);
-                 button.textContent = "Reproducir";
-             });
+                    mySwiper.slideNext();
+                });
+                $$('.prev').on('click',function(){
+                    var audio = document.getElementById("audrep"+this.id);
+                    var button = document.getElementById('botonn'+this.id);
+                    audio.pause();
+                    audio.currentTime = 0;
+                    button.textContent = "Reproducir";
+                    mySwiper.slidePrev();
+                });
+                $$('.play').on('click',function(){     
+                    var num=this.id.substr(6);
+                    var audio = document.getElementById("audrep"+num);
+                    var button = document.getElementById(this.id);
+                    if (audio.paused) 
+                    {
+                        audio.play();
+                        button.textContent = "Pausar";
+                    }
+                    else
+                    {
+                        audio.pause();
+                        button.textContent = "Reproducir";
+                    }
+                 });
+                 $$('.audioPrueba').on('playing',function(){
+                  
+                 });
+                 $$('.audioPrueba').on('ended',function(){
+                    var num=this.id.substr(6);
+                    var button = document.getElementById('botonn'+num);
+                    button.textContent = "Reproducir";
+                 });
             });
          })
          .catch(function(error){
@@ -1428,7 +1090,6 @@ function fileValidation(file)
         $$('#error2audio'+file).removeClass('visible');
         $$('#error2audio'+file).addClass('oculto');
         var a=parseInt($$('#audio'+file)[0].files[0].size);
-        console.log("tm: "+a);
         var b=a/1024;
         var c=b*8;
         var d=c/128;
