@@ -208,17 +208,14 @@ $$(document).on('page:init', '.page[data-name="homeAdmin"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) {
     $$('#tipoCat').on('change',function(){
-        console.log("tipo: "+$$('#tipoCat').val());
         var tipo=$$('#tipoCat').val();
         if(tipo==1)
         {
-            console.log("entro");
             var bd=firebase.firestore();
             bd.collection('catalogo').get()
             .then(function(querySnapshot){
                 querySnapshot.forEach(function(doc){
-                    console.log("entro 3");
-                    $$('#idCat').append('<option value="'+doc.id+'">'+doc.id+'</option>');
+                       $$('#idCat').append('<option value="'+doc.id+'">'+doc.id+'</option>');
                 });
             });
             $$('#subcategoria').removeClass('oculto').addClass('visible');
@@ -231,7 +228,7 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
     arregloEliminarN=[];
     var i=2;
     $$('.masPaso').on('click',function(){
-        console.log("i: "+i);
+  
         $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea placeholder="Ingrese el texto del paso" id="textoenfermedad'+i+'" class="colorFondo"></textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div> <div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div> <div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen1" >El archivo debe tener formato jpg, jpge o png.</div></div> <div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
         if($$('#tituloE').val()==="")
         {
@@ -246,7 +243,7 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
         i++;
         $$('.eliminarPaso').on('click',function(){
             var id= parseInt(this.id);
-            console.log("eliminar id: "+id);
+           
             arregloEliminarN.push(id);
             $$('#paso'+id).remove();
         });
@@ -260,7 +257,7 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
             {
                 if(arregloEliminarN.indexOf(j)===-1) // noesta en el arreglo
                 {
-                    console.log("j: "+j);
+                 
                     var paso=$$('#textoenfermedad'+j).val(); 
                     if(paso==="") 
                     {
@@ -332,7 +329,7 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
     });    
     $$('#1').on('click',function(){
         var id= parseInt(this.id);
-        console.log("eliminar id: "+id);
+      
          arregloEliminarN.push(id);
          $$('#paso'+id).remove();
     });
@@ -405,7 +402,7 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
 
     });
     $$('#guardarCat').on('click',function(){
-       console.log("click");
+   
        var cat=$$('#titNuevoC').val();
        validarTitulo(cat);
         if($$('#errorTitulo').hasClass('visible')===false)
@@ -418,7 +415,6 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
 }); 
 
 $$(document).on('page:init', '.page[data-name="eliminarCategoria"]', function (e) {
-console.log("elim categoria myapp");
     var searchbar = app.searchbar.create({
       el: '.searchbar',
       searchContainer: '.list',
