@@ -25,7 +25,7 @@
         <!-- Path to your custom app styles-->
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/estilos.css">
-        
+
     </head>
 
     <body class="color-theme-red">
@@ -36,7 +36,7 @@
                 <div class="block visible" id="menu1">
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                            <i class="fas fa-home"></i>                            
+                            <i class="fas fa-home"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/home/" class="panel-close">Home</a>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="fas fa-link"></i>                           
+                           <i class="fas fa-link"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="" class="panel-close manualUsuario">Manual</a>
@@ -52,7 +52,7 @@
                     </div>
                       <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="far fa-id-badge"></i>                          
+                           <i class="far fa-id-badge"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/iniciarSesion/" class="panel-close">Administrador</a>
@@ -62,7 +62,7 @@
                    <div class="block oculto" id="menu2">
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                            <i class="fas fa-home"></i>                            
+                            <i class="fas fa-home"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/home/" class="panel-close">Home</a>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                            <i class="fas fa-home"></i>                            
+                            <i class="fas fa-home"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/homeAdmin/" class="panel-close">Home administrador</a>
@@ -79,7 +79,7 @@
 
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="fas fa-link"></i>                           
+                           <i class="fas fa-link"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="" class="panel-close manualUsuario">Manual usuarios</a>
@@ -87,41 +87,41 @@
                     </div>
                       <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="far fa-id-badge"></i>                          
+                           <i class="far fa-id-badge"></i>
                         </div>
                         <div class="col-80 item-media">
-                            <a href="#" class="panel-close cerrar">Cerrar sesion</a> 
+                            <a href="#" class="panel-close cerrar">Cerrar sesion</a>
                         </div>
                     </div>
                 </div>
             </div>
-          
+
         <!-- Your main view, should have "view-main" class -->
             <div class="view view-main">
             <!-- Initial Page, "data-name" contains page name -->
                 <div data-name="index" class="page">
-    
+
                 <!-- Top Navbar -->
        <!--           <div class="navbar">
                     <div class="navbar-inner">
                     <div class="title">Biblioteca</div>
                     </div>
                 </div> -->
-        
+
               <!--   Toolbar -->
                 <div class="toolbar toolbar-bottom-md color-gray">
-                    <div class="toolbar-inner right"> 
+                    <div class="toolbar-inner right">
                   <!-- Toolbar links -->
                    <b id="cedi">® CeDITE-UTNFRRo, UAI </b>
-                   
+
                     </div>
-                </div> 
-        
+                </div>
+
                 <!-- Scrollable page content -->
                     <div class="page-content fondo" >
                         <div>
                             <p id="tit">Primeros Respondedores</p>
-                            <a href="/homeAdmin/" data-view=".page-content">
+                            <a href="/home/" data-view=".page-content">
                                 <img src="cruz.jpg" alt="Primeros Respondedores" id="ima"/>
                             </a>
                         </div>
@@ -133,7 +133,7 @@
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
     <script type="text/javascript" src="js/funciones.js"></script>
-     <script defer src="js/all.js"></script> 
+     <script defer src="js/all.js"></script>
  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
 
@@ -156,9 +156,9 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  
+
   // PRUEBA SIN CONEXION
-  
+
     firebase.firestore().enablePersistence()
     .then(function(){
         console.log('persosss');
@@ -174,7 +174,7 @@
           // ...
     }
   });
-   
+
 </script>
     </body>
 
