@@ -659,26 +659,15 @@ function guardarTitulo()
 }
 function validarTitulo(cat)
 {
-    console.log("dentro de validar: "+cat);
-    if(cat.length===0)
+    if(cat.length>40)
     {
-        console.log("vacio");
-        $$('#errorTitulo1Cat').removeClass('oculto');
-        $$('#errorTitulo1Cat').addClass('visible');
+        $$('#errorTitulo').removeClass('oculto');
+        $$('#errorTitulo').addClass('visible');
     }
     else
     {
-        console.log("no vacio");
-        if(cat.length>40)
-        {
-            $$('#errorTituloCat').removeClass('oculto');
-            $$('#errorTituloCat').addClass('visible');
-        }
-        else
-        {
-            $$('#errorTituloCat').removeClass('visible');
-            $$('#errorTituloCat').addClass('oculto');
-        }
+        $$('#errorTitulo').removeClass('visible');
+        $$('#errorTitulo').addClass('oculto');
     }
 }
 function guardarCategoria()
