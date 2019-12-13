@@ -394,7 +394,7 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
         });
     });
     $$('.opciones').on('change',function(){
-        if($$('.opciones').val()==="vacio")
+        if($$('.opciones').val()=== 0 || $$('.opciones').val()==="" )
         {
             $$('#divNuevoTit').removeClass('visible').addClass('oculto');
             $$('#guardarCat').prop('disabled', true);
@@ -409,8 +409,8 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
     $$('#guardarCat').on('click',function()
     {
         var cat=$$('#titNuevoC').val();
-        validarTitulo(cat);
-        if($$('#errorTituloCat').hasClass('oculto')|| $$('#errorTitulo1Cat').hasClass('oculto'))
+        validarTituloe(cat);
+        if($$('#errorTituloCate').hasClass('oculto') || $$('#errorTitulo1Cate').hasClass('oculto'))
         {
             console.log("entro a editarcat no se pq");
             guardarTitulo();

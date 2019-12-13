@@ -681,6 +681,30 @@ function validarTitulo(cat)
         }
     }
 }
+function validarTituloe(cat)
+{
+    console.log("dentro de validar: "+cat);
+    if(cat.length===0)
+    {
+        console.log("vacio");
+        $$('#errorTitulo1Cate').removeClass('oculto');
+        $$('#errorTitulo1Cate').addClass('visible');
+    }
+    else
+    {
+        console.log("no vacio");
+        if(cat.length>40)
+        {
+            $$('#errorTituloCate').removeClass('oculto');
+            $$('#errorTituloCate').addClass('visible');
+        }
+        else
+        {
+            $$('#errorTituloCate').removeClass('visible');
+            $$('#errorTituloCate').addClass('oculto');
+        }
+    }
+}
 function guardarCategoria()
 {
     var bd=firebase.firestore();
