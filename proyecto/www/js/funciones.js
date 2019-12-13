@@ -1,4 +1,3 @@
-//lalalallaa232323
 function validarInfo(info)
 {
     for (var jj=1;jj<nroNuevoPasoE;jj++)
@@ -750,74 +749,68 @@ function eliminoVacios(h)
 function cargaBusqueda(h)
 {
     var bd=firebase.firestore();
-    bd.collection('catalogo').get()
-    // bd.collection('catalogo')
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc){
-          //.onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
-          //  snapshot.docChanges().forEach(function(change) {
-            var cantidad=doc.data().Titulos.length;
+    bd.collection('catalogo')
+    .onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            var cantidad=change.doc.data().Titulos.length;
             if(h==="el")
             {
                 if(cantidad===1)
                 {
-                    if(doc.data().Titulos[0] !==doc.id)
+                    if(change.doc.data().Titulos[0] !==doc.id)
                     {  //si el nombre del boton es muy grande, que se achique la letra
-                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');
-                        $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
-                            doc.data().Titulos.forEach(function(element){
-
-                            $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close popup-open"  data-popup=".popup-eliminar"   id="'+element+'">'+element+'</button></li>');
+                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+change.doc.id+'"  id="'+change.doc.id+'" >'+change.doc.id+'</button></div></li>');
+                        $$('#escondido').append('<div class="popover popover-links'+change.doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+change.doc.id+'"></ul></div></div></div>');
+                        change.doc.data().Titulos.forEach(function(element){
+                            $$('#popover-busqueda'+change.doc.id).append('<li><button value="'+change.doc.id+'" class="col button button-raised itemsConsulta item-link popover-close popup-open"  data-popup=".popup-eliminar"   id="'+element+'">'+element+'</button></li>');
                         });
                     }
                     else
                     {
-                         $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminar"   id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                         $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+change.doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminar"   id="'+change.doc.id+'">'+change.doc.id+'</button></div></li>');
                     }
                 }
                 else
                 {
-                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');
-                    $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
-                    doc.data().Titulos.forEach(function(element){
-
-                        $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close popup-open"  data-popup=".popup-eliminar"   id="'+element+'">'+element+'</button></li>');
+                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+change.doc.id+'"  id="'+change.doc.id+'" >'+change.doc.id+'</button></div></li>');
+                    $$('#escondido').append('<div class="popover popover-links'+change.doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+change.doc.id+'"></ul></div></div></div>');
+                    change.doc.data().Titulos.forEach(function(element){
+                        $$('#popover-busqueda'+change.doc.id).append('<li><button value="'+change.doc.id+'" class="col button button-raised itemsConsulta item-link popover-close popup-open"  data-popup=".popup-eliminar"   id="'+element+'">'+element+'</button></li>');
                     });
                 }
             }
             else if(h==="elc")
             {
-                 $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminarC"   id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                 $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+change.doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminarC"   id="'+change.doc.id+'">'+change.doc.id+'</button></div></li>');
             }
             else
             {
                 if(cantidad===1)
                 {
-                    if(doc.data().Titulos[0] !==doc.id)
+                    if(change.doc.data().Titulos[0] !==change.doc.id)
                     {
-                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
-                        $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
-                        doc.data().Titulos.forEach(function(element){
-                            $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
+                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+change.doc.id+'"  id="'+change.doc.id+'">'+change.doc.id+'</button></div></li>');
+                        $$('#escondido').append('<div class="popover popover-links'+change.doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+change.doc.id+'"></ul></div></div></div>');
+                        change.doc.data().Titulos.forEach(function(element){
+                            $$('#popover-busqueda'+change.doc.id).append('<li><button value="'+change.doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
                         });
                     }
                     else
                     {
-                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+change.doc.id+'" class="col button button-raised item-title itemsConsulta"  id="'+change.doc.id+'">'+change.doc.id+'</button></div></li>');
                     }
                 }
                 else
                 {
-                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+change.doc.id+'"  id="'+change.doc.id+'">'+change.doc.id+'</button></div></li>');
                     $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
-                    doc.data().Titulos.forEach(function(element){
-                        $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
+                    change.doc.data().Titulos.forEach(function(element){
+                        $$('#popover-busqueda'+change.doc.id).append('<li><button value="'+change.doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
                     });
                 }
             }
         });
         $$('.itemsConsulta').on('click',function(){
-
             if(h==="h") /* busqueda */
             {
                 enfermedadBusqueda=this.id;
@@ -842,9 +835,6 @@ function cargaBusqueda(h)
             }
         });
     });
-    /*.catch(function(error){
-        console.log('Error al recuperar los datos de pasos de la base',error);
-    });*/
 }
 function eliminarCategoria()
 {
@@ -979,29 +969,26 @@ function eliminar2()
 
 function cargarEnfermedad(enfermedad)
 {
+
     var arregloPasos=[];
     var arregloAudios=[];
     var bd=firebase.firestore();
-    bd.collection('subcatalogo').doc(enfermedad).collection('Pasos').get()
-    .then(function(querySnapshot)
-    {
-        querySnapshot.forEach(function(doc)
-        {
-            arregloPasos.push(doc.data().valor);
+    bd.collection('subcatalogo').doc(enfermedad).collection('Pasos')
+    .onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            arregloPasos.push(change.doc.data().valor);
         });
-        bd.collection('subcatalogo').doc(enfermedad).collection('Audios').get()
-        .then(function(querySnapshot)
-        {
-            querySnapshot.forEach(function(doc)
-            {
-                arregloAudios.push(doc.data().valor);
+        bd.collection('subcatalogo').doc(enfermedad).collection('Audios')
+        .onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
+            snapshot.docChanges().forEach(function(change1) {
+                arregloAudios.push(change1.doc.data().valor);
             });
-            var arregloImagenes= new Array(arregloPasos.length-1); // tamaño
-            bd.collection('subcatalogo').doc(enfermedad).collection('Imagenes').get()
-            .then(function(querySnapshot){
-                querySnapshot.forEach(function(doc){
-                    var num=doc.id -1;
-                    arregloImagenes.splice(num,0,doc.data().valor);
+            var arregloImagenes=new Array(arregloPasos.length-1);
+            bd.collection('subcatalogo').doc(enfermedad).collection('Imagenes')
+            .onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
+                snapshot.docChanges().forEach(function(change2) {
+                    var num=change2.doc.id-1;
+                    arregloImagenes.splice(num,9,change2.doc.data().valor);
                 });
                 var mySwiper = document.querySelector('.swiper-container').swiper;
                 for(var j=0;j<arregloPasos.length;j++)
@@ -1015,15 +1002,18 @@ function cargarEnfermedad(enfermedad)
                         }
                         else if(j===0)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div>'+
+                            +'<div class="swiper-button-next next" id="'+j+'"></div></div>');
                         }
                         else if(k===arregloPasos.length)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio>'+
+                            +'<button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
                         }
                         else
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio>'+
+                            +' <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
                         }
                     }
                     else
@@ -1031,22 +1021,26 @@ function cargarEnfermedad(enfermedad)
                         var kk=j+1;
                         if(arregloPasos.length===1)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio>'+
+                            +'<button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
                         }
                         else if(j===0)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio>'+
+                            +'<button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
                         }
                         else if(kk===arregloPasos.length)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio>'+
+                            +'<button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
                         }
                         else
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio>'+
+                            +'<button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
                         }
                     }
-                }
+                } //fin for
                 $$('.fotos').on('click',function(){
                     var num=this.id.substr(3);
                     var photoBrowser = app.photoBrowser.create({
@@ -1056,7 +1050,7 @@ function cargarEnfermedad(enfermedad)
                     });
                     photoBrowser.open();
                 });
-                $$('.next').on('click',function(){
+                 $$('.next').on('click',function(){
                     var audio = document.getElementById("audrep"+this.id);
                     var button = document.getElementById('botonn'+this.id);
                     audio.pause();
@@ -1072,38 +1066,9 @@ function cargarEnfermedad(enfermedad)
                     button.textContent = "Reproducir";
                     mySwiper.slidePrev();
                 });
-                $$('.play').on('click',function(){
-                    var num=this.id.substr(6);
-                    var audio = document.getElementById("audrep"+num);
-                    var button = document.getElementById(this.id);
-                    if (audio.paused)
-                    {
-                        audio.play();
-                        button.textContent = "Pausar";
-                    }
-                    else
-                    {
-                        audio.pause();
-                        button.textContent = "Reproducir";
-                    }
-                 });
-                 $$('.audioPrueba').on('playing',function(){
-
-                 });
-                 $$('.audioPrueba').on('ended',function(){
-                    var num=this.id.substr(6);
-                    var button = document.getElementById('botonn'+num);
-                    button.textContent = "Reproducir";
-                 });
             });
-         })
-         .catch(function(error){
-             console.log('Error al recuperar los datos de audio de la base',error);
-         });
-     })
-     .catch(function(error){
-         console.log('Error al recuperar los datos de pasos de la base',error);
-     });
+        });
+    });
 }
 
 function fileValidation(file)

@@ -1,0 +1,45 @@
+<div class="page" data-name="editarCategoria">
+    <div class="navbar">
+        <div class="navbar-inner sliding">
+          <div class="left">
+                <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="ios-only">Back</span>
+                </a>
+            </div>
+         <div class="title">Primeros respondedores</div>
+            <div class="right">
+                <a class="panel-open" href="#" data-panel="right">
+                    <i class="fas fa-bars iconopanel"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="card">
+            <div class="card-header">
+            	<b>Titulo</b>
+            </div>
+            <div class="card-content card-content-padding">
+            	<div class="row item-input-wrap input-dropdown-wrap">
+            		<select id="ediTitC" class="opciones">
+                            <option value="0">Seleccione una categoria</option>
+            		</select>
+            	</div>
+            	<div class="oculto row" id="divNuevoTit">
+
+                		<b>Nuevo titulo:</b>
+
+                		<input type="text" placeholder="Ingrese nuevo titulo" id="titNuevoCat"/>
+                		<span class="input-clear-button"></span>
+                        <div class="oculto textoerror" id="errorTituloCate" >La cantidad de caracteres debe ser menor a 40.</div>
+                        <div class="oculto textoerror" id="errorTitulo1Cate" >El titulo no puede estar vacio.</div>
+        	     
+            	</div>
+            </div>
+            <div class="card-footer" id="footerEdCat">
+                <button class=" button button-small button-fill" id="guardarCat" disabled>Guardar</button>
+            </div>
+         </div>
+    </div>
+</div>

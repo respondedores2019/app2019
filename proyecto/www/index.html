@@ -121,7 +121,7 @@
                     <div class="page-content fondo" >
                         <div>
                             <p id="tit">Primeros Respondedores</p>
-                            <a href="/homeAdmin/" data-view=".page-content">
+                            <a href="/home/" data-view=".page-content">
                                 <img src="cruz.jpg" alt="Primeros Respondedores" id="ima"/>
                             </a>
                         </div>
@@ -158,10 +158,12 @@
   firebase.initializeApp(firebaseConfig);
 
   // PRUEBA SIN CONEXION
-
+    firebase.firestore().settings({
+        cacheSizeBytes:firebase.firestore.CACHE_SIZE_UNLIMITED
+    });
     firebase.firestore().enablePersistence()
     .then(function(){
-        console.log('sin conexion');
+        console.log('sin conexion habilitado');
     })
     .catch(function(err) {
     if (err.code == 'failed-precondition') {
