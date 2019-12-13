@@ -183,6 +183,7 @@ textarea
      resize: vertical;
      overflow: auto;
      border: 1px solid #ff8833;
+     padding-left: 2vw;
 }
 #titNuevoC
 {
