@@ -170,13 +170,61 @@ $$(document).on('page:init', '.page[data-name="iniciarSesion"]', function (e) {
 $$(document).on('page:init', '.page[data-name="nuevaCategoria"]', function (e) {
     $$('#guardarCategoria').on('click',function(){
         var cat=$$('#titCategoria').val();
+        console.log("dentro de myapp: "+cat);
         validarTitulo(cat);
-        if($$('#errorTituloCat').hasClass('oculto')|| $$('#errorTitulo1Cat').hasClass('oculto'))
+        if($$('#errorTitulo1Cat').hasClass('oculto'))
         {
-            console.log("entro");
-            guardarCategoria();
+            if($$('#errorTituloCat').hasClass('oculto'))
+            {
+                console.log("entro bien");
+                guardarCategoria();
+            }
+        }
+        else
+        {
+            console.log("funcionp");
+        }
+    });
+});
+
+$$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) {
+    var bd=firebase.firestore();
+    bd.collection('catalogo').get()
+    .then(function(querySnapshot){
+        querySnapshot.forEach(function(doc){
+            $$('#ediTitC').append('<option value="'+doc.id+'" >'+doc.id+'</option>');
+        });
+    });
+    $$('.opciones').on('change',function(){
+        if($$('.opciones').val()=== 0 || $$('.opciones').val()==="" )
+        {
+            $$('#divNuevoTit').removeClass('visible').addClass('oculto');
+            $$('#guardarCat').prop('disabled', true);
+        }
+        else
+        {
+            $$('#divNuevoTit').removeClass('oculto').addClass('visible');
+            $$('#guardarCat').prop('disabled', false);
         }
 
+    });
+    $$('#guardarCat').on('click',function()
+    {
+        var cat=$$('#titNuevoCat').val();
+        console.log("dentro de myapp: "+cat);
+        validarTituloe(cat);
+        if($$('#errorTitulo1Cate').hasClass('oculto'))
+        {
+            if($$('#errorTituloCate').hasClass('oculto'))
+            {
+                console.log("entro bien");
+                 guardarTitulo();
+            }
+        }
+        else
+        {
+            console.log("funcionp");
+        }
     });
 });
 
@@ -384,41 +432,6 @@ $$(document).on('page:init', '.page[data-name="eliminarEnfermedad"]', function (
     });
 });
 
-
-$$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) {
-    var bd=firebase.firestore();
-    bd.collection('catalogo').get()
-    .then(function(querySnapshot){
-        querySnapshot.forEach(function(doc){
-            $$('#ediTitC').append('<option value="'+doc.id+'" >'+doc.id+'</option>');
-        });
-    });
-    $$('.opciones').on('change',function(){
-        if($$('.opciones').val()=== 0 || $$('.opciones').val()==="" )
-        {
-            $$('#divNuevoTit').removeClass('visible').addClass('oculto');
-            $$('#guardarCat').prop('disabled', true);
-        }
-        else
-        {
-            $$('#divNuevoTit').removeClass('oculto').addClass('visible');
-            $$('#guardarCat').prop('disabled', false);
-        }
-
-    });
-    $$('#guardarCat').on('click',function()
-    {
-        var cat=$$('#titNuevoC').val();
-        validarTituloe(cat);
-        if($$('#errorTituloCate').hasClass('oculto') || $$('#errorTitulo1Cate').hasClass('oculto'))
-        {
-            console.log("entro a editarcat no se pq");
-            guardarTitulo();
-        }
-
-    });
-
-});
 
 $$(document).on('page:init', '.page[data-name="eliminarCategoria"]', function (e) {
     var searchbar = app.searchbar.create({

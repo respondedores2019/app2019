@@ -629,7 +629,7 @@ function olvidoClave()
 function guardarTitulo()
 {
     var bd=firebase.firestore();
-    var tit=$$('#titNuevoC').val();
+    var tit=$$('#titNuevoCat').val();
     var titViejo=$$('#ediTitC').val();
     var minu=tit.toLowerCase();
     var mayTitulo=minu.charAt(0).toUpperCase() + minu.slice(1);
@@ -663,21 +663,20 @@ function validarTitulo(cat)
     if(cat.length===0)
     {
         console.log("vacio");
-        $$('#errorTitulo1Cat').removeClass('oculto');
-        $$('#errorTitulo1Cat').addClass('visible');
+        $$('#errorTituloCat').removeClass('visible').addClass('oculto');
+        $$('#errorTitulo1Cat').removeClass('oculto').addClass('visible');
     }
     else
     {
+        $$('#errorTitulo1Cat').removeClass('visible').addClass('oculto');
         console.log("no vacio");
         if(cat.length>40)
         {
-            $$('#errorTituloCat').removeClass('oculto');
-            $$('#errorTituloCat').addClass('visible');
+            $$('#errorTituloCat').removeClass('oculto').addClass('visible');
         }
         else
         {
-            $$('#errorTituloCat').removeClass('visible');
-            $$('#errorTituloCat').addClass('oculto');
+            $$('#errorTituloCat').removeClass('visible').addClass('oculto');
         }
     }
 }
@@ -687,21 +686,20 @@ function validarTituloe(cat)
     if(cat.length===0)
     {
         console.log("vacio");
-        $$('#errorTitulo1Cate').removeClass('oculto');
-        $$('#errorTitulo1Cate').addClass('visible');
+        $$('#errorTituloCate').removeClass('visible').addClass('oculto');
+        $$('#errorTitulo1Cate').removeClass('oculto').addClass('visible');
     }
     else
     {
+        $$('#errorTitulo1Cate').removeClass('visible').addClass('oculto');
         console.log("no vacio");
         if(cat.length>40)
         {
-            $$('#errorTituloCate').removeClass('oculto');
-            $$('#errorTituloCate').addClass('visible');
+            $$('#errorTituloCate').removeClass('oculto').addClass('visible');
         }
         else
         {
-            $$('#errorTituloCate').removeClass('visible');
-            $$('#errorTituloCate').addClass('oculto');
+            $$('#errorTituloCate').removeClass('visible').addClass('oculto');
         }
     }
 }
