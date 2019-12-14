@@ -988,7 +988,7 @@ function cargarEnfermedad(enfermedad)
             .onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
                 snapshot.docChanges().forEach(function(change2) {
                     var num=change2.doc.id-1;
-                    arregloImagenes.splice(num,9,change2.doc.data().valor);
+                    arregloImagenes.splice(num,0,change2.doc.data().valor);
                 });
                 var mySwiper = document.querySelector('.swiper-container').swiper;
                 for(var j=0;j<arregloPasos.length;j++)
