@@ -121,7 +121,7 @@
                     <div class="page-content fondo" >
                         <div>
                             <p id="tit">Primeros Respondedores</p>
-                            <a href="/home/" data-view=".page-content">
+                            <a href="/infoEnfermedad/" data-view=".page-content">
                                 <img src="cruz.jpg" alt="Primeros Respondedores" id="ima"/>
                             </a>
                         </div>
@@ -158,12 +158,10 @@
   firebase.initializeApp(firebaseConfig);
 
   // PRUEBA SIN CONEXION
-    firebase.firestore().settings({
-        cacheSizeBytes:firebase.firestore.CACHE_SIZE_UNLIMITED
-    });
+
     firebase.firestore().enablePersistence()
     .then(function(){
-        console.log('sin conexion habilitado');
+        console.log('sin conexion');
     })
     .catch(function(err) {
     if (err.code == 'failed-precondition') {

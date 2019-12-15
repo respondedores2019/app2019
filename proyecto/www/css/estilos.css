@@ -211,3 +211,12 @@ img
     width:50%;
     height:35%
 }
+.largo
+{
+    width: 90vw;
+    background-color: yellow;
+}
+.corto
+{
+    width: 60vw;
+}
