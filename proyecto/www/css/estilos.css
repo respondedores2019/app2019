@@ -179,7 +179,7 @@ select
 }
 textarea
 {
-     width:90vw;
+     /*width:90vw;*/
      resize: vertical;
      overflow: auto;
      border: 1px solid #ff8833;
@@ -210,13 +210,4 @@ img
 {
     width:50%;
     height:35%
-}
-.largo
-{
-    width: 90vw;
-    background-color: yellow;
-}
-.corto
-{
-    width: 60vw;
 }
