@@ -22,5 +22,15 @@
     },
     "is_top_level": false,
     "variables": {}
+  },
+  "phonegap-plugin-speech-recognition": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/macdonst/SpeechRecognitionPlugin"
+    },
+    "is_top_level": true,
+    "variables": {
+      "MICROPHONE_USAGE_DESCRIPTION": "your usage message"
+    }
   }
 }

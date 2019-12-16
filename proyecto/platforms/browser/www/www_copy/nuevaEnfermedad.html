@@ -1,0 +1,81 @@
+<div class="page" data-name="nuevaEnfermedad">
+    <div class="navbar">
+        <div class="navbar-inner sliding">
+          <div class="left">
+                <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="ios-only">Back</span>
+                </a>
+            </div>
+             <div class="title">Primeros respondedores</div>
+            <div class="right">
+                <a class="panel-open" href="#" data-panel="right">
+                    <i class="fas fa-bars iconopanel"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        <div id="agregarpasos">
+            <div class="card">
+                <div class="card-header"><b>¿Pertenece a una categoria?</b></div>
+                <div class="card-content card-content-padding">
+                    <div class="item-input-wrap input-dropdown-wrap">
+                        <select id="tipoCat">
+                            <option value="0" selected>No</option>
+                            <option value="1">Si</option>
+                        </select>
+                    </div> 
+                    <div id="subcategoria" class="oculto"> 
+                        <b>Categoria: </b>
+                        <div class="item-input-wrap input-dropdown-wrap">
+                            <select id="idCat"></select>                        
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><b>Titulo</b></div>
+                <div class="card-content card-content-padding">
+                    <input type="text" placeholder="Ingrese el titulo" id="tituloE">
+                    <span class="input-clear-button"></span>
+                    <div class="oculto textoerror" id="errorTitulo" >La cantidad de caracteres debe ser menor a 40.</div>
+                </div>
+            </div>
+            <div class="card" id="paso1">
+                <div class="card-header"><b>Paso:</b></div>
+                <div class="card-content card-content-padding">
+                    <textarea placeholder="Ingrese el texto del paso" id="textoenfermedad1" class="colorFondo"></textarea> <!-- Agrandar espacio de texto--> 
+                    <span class="input-clear-button"></span>
+                    <div class="oculto textoerror" id="errortextoenfermedad1" >Completar este campo.</div>
+                    <div class="oculto textoerror" id="error2textoenfermedad1" >La cantidad de caracteres debe ser menor a 170.</div>
+                </div>
+                <div class="card-header"><b>Audio:</b></div>
+                <div class="card-content card-content-padding">
+                    <input type="file" class="audios" name="audio1" id="audio1" disabled >     
+                    <div class="oculto textoerror" id="erroraudio1" >Completar este campo.</div>
+                    <div class="oculto textoerror" id="error2audio1" >El archivo debe tener formato mp3.</div>
+                    <div class="oculto textoerror" id="error3audio1" >El archivo debe durar menos de 30 segundos.</div>
+                </div>    
+                <div class="card-header"><b>Imagen:</b></div>
+                <div class="card-content card-content-padding">
+                    <input type="file" class="imagenes" name="imagen1" id="imagen1" disabled>
+                    <div class="oculto textoerror" id="errorimagen1" >El archivo debe tener formato jpg, jpge o png.</div>
+                </div> 
+                <div class="card-footer">
+                    <button class=" button button-small button-fill eliminarPaso" id="1">Eliminar</button>  
+                </div>
+            </div>
+        </div>
+        <div class="list no-hairlines-md">
+            <ul>
+                <li class="item-content item-input">
+                    <button class=" button button-small button-fill masPaso" id="masPaso">Mas Pasos</button> 
+                </li>
+                <li class="item-content item-input">
+                    <button class=" button button-small button-fill botonInicio" id="guardarEnfermedad">Guardar enfermedad</button> 
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
