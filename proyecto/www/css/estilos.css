@@ -107,8 +107,8 @@
     padding-right: 3vw;
     padding-left: 5vw;
     text-align: center;
-   font-family: 'Rubik', sans-serif;
-   height:60vh;
+    font-family: 'Rubik', sans-serif;
+    height:60vh;
  /*  background-color:pink;*/
 }
 /*
@@ -166,7 +166,7 @@ select
     /* margin-top: 1vh; */
     padding-top: 1vh;
     padding-left: 2vw;
-    font-size: 3vh;
+    font-size: 2vh;
 }
 
 .popover
@@ -181,7 +181,7 @@ select
 textarea
 {
      width:85vw;
-     font-size: 3vh;
+     font-size: 2vh;
      height: 10vh;
      resize: vertical;
      overflow: auto;
@@ -191,7 +191,7 @@ textarea
 #titNuevoC
 {
    height:10vh;
-   font-size: 3vh;
+   font-size: 2vh;
 }
 #nuevo,#editar,#nuevoC,#editarC,#eliminar,#eliminarC
 {
@@ -203,7 +203,7 @@ textarea
     height: 8vh;
     padding-left: 2vw;
     width: 90vw;
-    font-size: 3vh;
+    font-size: 2vh;
 }
 #cedi
 {
