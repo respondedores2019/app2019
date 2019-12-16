@@ -166,6 +166,7 @@ select
     /* margin-top: 1vh; */
     padding-top: 1vh;
     padding-left: 2vw;
+    font-size: 3vh;
 }
 
 .popover
@@ -179,7 +180,9 @@ select
 }
 textarea
 {
-     /*width:90vw;*/
+     width:85vw;
+     font-size: 3vh;
+     height: 10vh;
      resize: vertical;
      overflow: auto;
      border: 1px solid #ff8833;
@@ -188,6 +191,7 @@ textarea
 #titNuevoC
 {
    height:10vh;
+   font-size: 3vh;
 }
 #nuevo,#editar,#nuevoC,#editarC,#eliminar,#eliminarC
 {
@@ -199,6 +203,7 @@ textarea
     height: 8vh;
     padding-left: 2vw;
     width: 90vw;
+    font-size: 3vh;
 }
 #cedi
 {
