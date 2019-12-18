@@ -1046,8 +1046,6 @@ function cargarEnfermedad(enfermedad)
                             mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Link a foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
                         }
                     }
-                    console.log("j "+j);
-               //     console.log("no se "+mySwiper.$el);
                     recognition.start();
                 }
                 $$('.fotos').on('click',function(){
