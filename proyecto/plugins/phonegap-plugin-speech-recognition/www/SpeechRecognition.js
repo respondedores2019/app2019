@@ -1,6 +1,6 @@
 var exec = require("cordova/exec");
 
-/** 
+/**
     attribute SpeechGrammarList grammars;
     attribute DOMString lang;
     attribute boolean continuous;
@@ -15,7 +15,7 @@ var SpeechRecognition = function () {
     this.interimResults = false;
     this.maxAlternatives = 1;
     this.serviceURI = "";
-    
+
     // event methods
     this.onaudiostart = null;
     this.onsoundstart = null;
@@ -39,6 +39,7 @@ var SpeechRecognition = function () {
 SpeechRecognition.prototype.start = function() {
     var that = this;
     var successCallback = function(event) {
+        console.log("ni idea");
         if (event.type === "audiostart" && typeof that.onaudiostart === "function") {
             that.onaudiostart(event);
         } else if (event.type === "soundstart" && typeof that.onsoundstart === "function") {

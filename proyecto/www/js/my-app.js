@@ -92,19 +92,35 @@ var arregloEliminarE=[]; // se usa para borrar pasos en editar enfermedad
 var nroNuevoPasoE=0; // se usa en editar al agregar mas pasos
 var recognition;
 
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     $$('.cerrar').on('click',cerrarSesion); //aca no anda
     $$('.manualUsuario').on('click',function(){
          app.dialog.alert('Manual de usuario en proceso de desarrollo','Confirmacion');
     });
+    /*
     recognition = new SpeechRecognition();
     recognition.onresult = function(event) {
         if (event.results.length > 0) {
-            q.value = event.results[0][0].transcript;
-            q.form.submit();
+            //q.value = event.results[0][0].transcript;
+            //q.form.submit();
+            console.log("lo que dice cdo hablo "+ event.results[0][0].transcript);
+            var audio = document.getElementById("audrep"+1); // puse asi para que reproduzca el primer audio
+            var r=event.results[0][0].transcript;
+            if(r=="play")
+            {
+                console.log("play audio");
+                audio.play();
+
+            }
+            if(r=="stop")
+            {
+                console.log("stop audio");
+                audio.pause();
+            }
         }
-    }
+    } */
 });
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
