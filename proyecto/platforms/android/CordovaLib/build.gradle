@@ -15,32 +15,23 @@
    specific language governing permissions and limitations
    under the License.
 */
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 ext {
     apply from: 'cordova.gradle'
-    //compileSdkVersion rootProject.ext.compileSdkVersion
     cdvCompileSdkVersion = privateHelpers.getProjectTarget()
     cdvBuildToolsVersion = privateHelpers.findLatestInstalledBuildTools()
 }
 
 buildscript {
     repositories {
-        //maven { url 'https://dl.bintray.com/android/android-tools/com/android/tools/'}
-        mavenCentral()
         google()
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 
     dependencies {
         // The gradle plugin and the maven plugin have to be updated after each version of Android
         // studio comes out
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
@@ -48,22 +39,20 @@ buildscript {
 
 allprojects {
     repositories {
-        //maven { url 'https://dl.bintray.com/android/android-tools/com/android/tools/'}
-        mavenCentral()
         google()
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 }
 
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
 group = 'org.apache.cordova'
-version = '8.1.0'
+version = '9.0.0'
 
 android {
-    compileSdkVersion = 28
-    //compileSdkVersion cdvCompileSdkVersion
+    compileSdkVersion cdvCompileSdkVersion
     buildToolsVersion cdvBuildToolsVersion
 
     compileOptions {
@@ -73,7 +62,7 @@ android {
 
     // For the Android Cordova Lib, we will hardcode the minSdkVersion and not allow changes.
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 22
     }
 
     sourceSets {
@@ -151,9 +140,9 @@ bintray {
         licenses = ['Apache-2.0']
         labels = ['android', 'cordova', 'phonegap']
         version {
-            name = '8.1.0'
+            name = '9.0.0'
             released  = new Date()
-            vcsTag = '8.1.0'
+            vcsTag = '9.0.0'
         }
     }
 }

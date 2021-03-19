@@ -4,8 +4,110 @@
     "uninstalled": []
   },
   "config_munge": {
-    "files": {}
+    "files": {
+      "res/xml/config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SpeechRecognition\"><param name=\"android-package\" value=\"org.apache.cordova.speech.SpeechRecognition\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "AndroidManifest.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
   },
-  "installed_plugins": {},
-  "dependent_plugins": {}
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "phonegap-plugin-speech-recognition": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechRecognition",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechRecognition.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechRecognition"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechRecognitionError",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechRecognitionError.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechRecognitionError"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechRecognitionAlternative",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechRecognitionAlternative.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechRecognitionAlternative"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechRecognitionResult",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechRecognitionResult.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechRecognitionResult"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechRecognitionResultList",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechRecognitionResultList.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechRecognitionResultList"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechRecognitionEvent",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechRecognitionEvent.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechRecognitionEvent"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechGrammar",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechGrammar.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechGrammar"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-speech-recognition.SpeechGrammarList",
+      "file": "plugins/phonegap-plugin-speech-recognition/www/SpeechGrammarList.js",
+      "pluginId": "phonegap-plugin-speech-recognition",
+      "clobbers": [
+        "SpeechGrammarList"
+      ]
+    }
+  ],
+  "plugin_metadata": {
+    "cordova-plugin-whitelist": "1.3.4",
+    "phonegap-plugin-speech-recognition": "0.3.0"
+  }
 }

@@ -7,7 +7,6 @@
     "displayName": "helloworld",
     "dependencies": {
         "artyom.js": "^1.0.6",
-        "cordova-android": "8.1.0",
         "cordova-browser": "^6.0.0",
         "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-firebase": "^2.0.5",
@@ -22,5 +21,8 @@
                 "MICROPHONE_USAGE_DESCRIPTION": "your usage message"
             }
         }
+    },
+    "devDependencies": {
+        "cordova-android": "^9.0.0"
     }
 }
