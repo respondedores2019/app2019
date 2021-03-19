@@ -1,0 +1,152 @@
+   var bd=firebase.firestore();
+/*        PARA CREAR UNA NUEVA ENFERMEDAD
+    var data={
+        audios:{1:"audio1", 2:"audio2"},
+        pasos:{1:"pasito a pasito 1", 2:"suave suavesito 2"}
+    };
+    bd.collection('enfermedad').doc('Anuevo').set(data).then(function() {
+    console.log("Document successfully written!");
+    });
+*/
+    /*bd.collection('enfermedad').doc('Anuevo').get() // PRUEBA DE OBTENER DATOS DEL MAP, no anda
+    .then(function(querySnapshot) {
+        querySnapshot.doc.map(function(doc) {
+            console.log(doc.id, " => ", doc.data()); 
+        });
+    }); */
+   var citiesRef = bd.collection('enf');
+ //crear bd
+ 
+/*
+var data1={paso:"paso1",audio:"audi1"};
+var data2={paso:"paso 2",audio:"aud 2"};
+
+var landmarks = Promise.all([
+    citiesRef.doc('Antes').collection('Pasos').doc("1").set(data1),
+    citiesRef.doc('Antes').collection('Pasos').doc("2").set(data2),
+]);
+*/
+//leer datos
+/*
+citiesRef.doc('Antes').collection('Pasos').get()
+.then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data().audio);
+            console.log(doc.id," == ",doc.data().paso);
+        });
+    })
+ .catch(function(error){
+    console.log('Error al recuperar los datos de pasos de la base',error);
+});
+*/
+//borrar doc entero, audio y paso
+/*
+citiesRef.doc('Antes').collection('Pasos').doc("1").delete()
+.then(function(doc) {
+      console.log("se borro");
+    })
+ .catch(function(error){
+    console.log('Error al recuperar los datos de pasos de la base',error);
+});
+*/
+//borrar solo un atributo
+/*
+var aa=citiesRef.doc('Antes').collection('Pasos').doc("2");
+aa.get()
+.then(function(doc) {
+    console.log("doc "+doc.data().paso);
+    aa.update({
+        paso: firebase.firestore.FieldValue.delete()
+    });
+
+    })
+ .catch(function(error){
+    console.log('Error al recuperar los datos de pasos de la base',error);
+});
+*/
+//modificar un atributo
+/*
+var aa=citiesRef.doc('Antes').collection('Pasos').doc("2");
+aa.get()
+.then(function(doc) {
+    console.log("doc "+doc.data().paso);
+    aa.update({
+        paso:"lalalala"
+    });
+
+    })
+ .catch(function(error){
+    console.log('Error al recuperar los datos de pasos de la base',error);
+});
+*/
+//agregar un doc 
+/*
+var data={
+    paso:"ni idea",
+    audio:"jeje"
+}
+var landmarks = Promise.all([
+    citiesRef.doc('Antes').collection('Pasos').doc("3").set(data),
+]);
+*/
+//eliminar un doc de enfermedad.. ANALIZAR 
+
+// ENF1 ES CATALOGO, ENF2 ES SUBCATALOGO
+/*
+    for(var i=1;i<=2;i++)
+    {
+        var aa=String(i);
+        citiesRef.doc('Antes').collection('Pasos').doc(aa).delete()
+        .then(function(doc) {
+              console.log("se borro ");
+            })
+         .catch(function(error){
+            console.log('Error al recuperar los datos de pasos de la base',error);
+        });
+    }
+ citiesRef.doc('Antes').delete()
+        .then(function(doc) {
+              console.log("se borro doc");
+            })
+         .catch(function(error){
+            console.log('Error al recuperar los datos de pasos de la base',error);
+        });
+*/
+//que ande con varias enfermedades en la misma
+/*
+bd.collection('enf1').get()
+.then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc){
+        console.log("titulos principales: "+doc.id);
+        console.log("cant: "+doc.data().Titulos.length);
+        var cantidad=doc.data().Titulos.length;
+        if(cantidad===1)
+        {
+               $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="button item-title itemsConsulta"  id="'+doc.id+'">'+doc.id+'</button></div></li>'); 
+        }
+        else
+        {
+            $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="button item-title   la popover-open" href="#" data-popover=".popover-links"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
+             
+            doc.data().Titulos.forEach(function(element){
+             
+                 console.log("el "+element);
+                            $$('#popover-busqueda').append('          <li><a class="list-button  itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</a></li>');
+          
+             });
+        
+        }
+    });
+
+    $$('.itemsConsulta').on('click',function(){
+console.log(" eee "+this.id);
+                enfermedad=this.id; 
+                mainView.router.navigate("/enfermedad/");
+            
+    });
+})
+.catch(function(error){
+    console.log('Error al recuperar los datos de pasos de la base',error);
+});
+*/
