@@ -47,7 +47,7 @@
                            <i class="fas fa-link"></i>
                         </div>
                         <div class="col-80 item-media">
-                            <a href="" class="panel-close manualUsuario">Ver +</a>
+                            <a href="" class="panel-close manualUsuario">Más info</a>
                         </div>
                     </div>
                       <div class="row espacio">
@@ -82,7 +82,7 @@
                            <i class="fas fa-link"></i>
                         </div>
                         <div class="col-80 item-media">
-                            <a href="" class="panel-close manualUsuario">Manual usuarios</a>
+                            <a href="" class="panel-close manualUsuario">Más info</a>
                         </div>
                     </div>
                       <div class="row espacio">
@@ -90,7 +90,7 @@
                            <i class="far fa-id-badge"></i>
                         </div>
                         <div class="col-80 item-media">
-                            <a href="#" class="panel-close cerrar">Cerrar sesion</a>
+                            <a href="#" class="panel-close cerrar">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,10 @@
   firebase.initializeApp(firebaseConfig);
 
   // PRUEBA SIN CONEXION
-
+    firebase.firestore().settings({
+    cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
+    });
+    
     firebase.firestore().enablePersistence()
     .then(function(){
         console.log('sin conexion');
