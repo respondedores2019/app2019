@@ -97,7 +97,7 @@ var recognition;
 $$(document).on('deviceready', function() {
     $$('.cerrar').on('click',cerrarSesion); //aca no anda
     $$('.manualUsuario').on('click',function(){
-         app.dialog.alert('Manual de usuario en proceso de desarrollo','Confirmacion');
+         app.dialog.alert('Manual informativo en proceso de desarrollo','Lo sentimos :(');
     });
     /*
     recognition = new SpeechRecognition();

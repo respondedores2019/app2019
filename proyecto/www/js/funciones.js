@@ -254,7 +254,7 @@ function guardarEditar(info,catV,catN)
                 }
             });
         }
-        app.dialog.alert('Se han guardado las modificaciones de la enfermedad', 'Confirmacion',function()
+        app.dialog.alert('Se han guardado las modificaciones de la enfermedad', 'Confirmación',function()
         {
             arregloEliminarE=[];
             mainView.router.navigate("/homeAdmin/");
@@ -493,14 +493,14 @@ function nuevaEnfermedad(i)
                 cantidad:cont-1
             };
             bd.collection('subcatalogo').doc(mayTitulo).set(data11);
-            app.dialog.alert('Se ha cargado una nueva enfermedad', 'Confirmacion',function()
+            app.dialog.alert('Se ha cargado una nueva enfermedad', 'Confirmación',function()
             {
                 mainView.router.navigate("/homeAdmin/");
             });
         }
         else
         {
-            app.dialog.alert('Ya existe una enfermedad con ese nombre','Error');
+            app.dialog.alert('Ya existe una enfermedad con ese nombre','Error!');
         }
     });
 }
@@ -643,14 +643,14 @@ function guardarTitulo()
             }
             bd.collection('catalogo').doc(mayTitulo).set(data);
             bd.collection('catalogo').doc(titViejo).delete();
-            app.dialog.alert('Se ha editado el titulo', 'Confirmacion',function()
+            app.dialog.alert('Se ha editado el título', 'Confirmación',function()
             {
                 mainView.router.navigate("/homeAdmin/");
             });
         }
         else
         {
-            app.dialog.alert('Ya existe una categoria con ese nombre','Error');
+            app.dialog.alert('Ya existe una categoría con ese nombre','Error!');
         }
     })
     .catch(function(error){
@@ -718,14 +718,14 @@ function guardarCategoria()
                 Titulos:[],
             }
             bd.collection('catalogo').doc(mayTitulo).set(data);
-            app.dialog.alert('Se ha cargado una nueva categoria', 'Confirmacion',function()
+            app.dialog.alert('Se ha cargado una nueva categoría', 'Confirmación',function()
             {
                 mainView.router.navigate("/homeAdmin/");
             });
         }
         else
         {
-            app.dialog.alert('Ya existe una categoria con ese nombre','Error');
+            app.dialog.alert('Ya existe una categoría con ese nombre','Error!');
         }
     })
     .catch(function(error){
