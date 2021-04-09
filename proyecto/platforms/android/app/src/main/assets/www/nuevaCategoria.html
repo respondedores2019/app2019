@@ -18,13 +18,16 @@
     <div class="page-content">
         <div class="card" id="card-cat">
             <div class="card-header"><b>Título de categoría:</b></div>
-            <div class="card-content card-content-padding">
-                <input type="text" placeholder="Ingrese el titulo" id="titCategoria">
+            <div class="card-content card-content-padding" id="card-titCategoria"> 
+                <textarea id="titCategoria" cols="40" minlength="1" maxlength="40" required placeholder="Ingrese el título..." autofocus ></textarea>
                 <span class="input-clear-button"></span>
-                <div class="oculto textoerror" id="errorTituloCat" >La cantidad de caracteres debe ser menor a 40.</div>
-                <div class="oculto textoerror" id="errorTitulo1Cat" >El título no puede estar vacío.</div>
+                <div class="text-right mt-1" id="charactersRemaining">
+                    <span id="current">0</span>
+                    <span id="maximum">/ 40</span>
+                </div>
+                <div class="oculto textoerror" id="errorTituloCat" >El título no puede estar vacío.</div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer" id="cardfooter-titCategoria">
                  <button class=" button button-small button-fill botonInicio" id="guardarCategoria">Guardar categoría</button>
             </div>
         </div>

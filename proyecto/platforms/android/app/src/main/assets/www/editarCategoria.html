@@ -30,17 +30,20 @@
                         <br/>
                         <br/>
                 		<b>Nuevo título:</b>
-                    <div class="card-content card-content-padding row">
-                		<input type="text" placeholder="Ingrese nuevo titulo" id="titNuevoCat"/>
+                    <div class="card-content card-content-padding row" id="card-titCategoriaEdit">
+                        <textarea id="titNuevoCat" cols="40" minlength="1" maxlength="40" required placeholder="Ingrese el nuevo título..." autofocus ></textarea>
                 		<span class="input-clear-button"></span>
-                        <div class="oculto textoerror" id="errorTituloCate" >La cantidad de caracteres debe ser menor a 40.</div>
-                        <div class="oculto textoerror" id="errorTitulo1Cate" >El título no puede estar vacío.</div>
+                        <div class="text-right mt-1" id="charactersRemaining">
+                            <span id="current">0</span>
+                            <span id="maximum">/ 40</span>
+                        </div>
+                        <div class="oculto textoerror" id="errorTituloCat" >El título no puede estar vacío.</div>
                     </div>
-            	</div>
+                </div>
             </div>
-            <div class="card-footer" id="footerEdCat">
-                <button class=" button button-small button-fill" id="guardarCat" disabled>Guardar</button>
-            </div>
-         </div>
+        </div>
+        <div class="card-footer" id="footerEdCat">
+            <button class=" button button-small button-fill" id="guardarCat" disabled>Guardar</button>
+        </div>
     </div>
 </div>

@@ -51,6 +51,7 @@
 #card-cat
 {
     margin-top:10vh;
+    margin-left:0vw;
 }
 
 .botonAdmin
@@ -178,13 +179,18 @@ select
 }
 textarea
 {
-     width:85vw;
+     width:80vw;
      height: 10vh;
      resize: vertical;
      overflow: auto;
      border: 1px solid #ff8833;
-     padding-left: 2vw;
 }
+
+#charactersRemaining {
+    float: right;
+    font-size: 0.875rem;
+}
+
 #titNuevoC
 {
    height:10vh;

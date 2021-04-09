@@ -657,52 +657,22 @@ function guardarTitulo()
         console.log('Error al recuperar los datos de pasos de la base',error);
     });
 }
+
 function validarTitulo(cat)
 {
     console.log("dentro de validar: "+cat);
     if(cat.length===0)
     {
         console.log("vacio");
+        $$('#errorTituloCat').removeClass('oculto').addClass('visible');
+    }
+    else
+    {
         $$('#errorTituloCat').removeClass('visible').addClass('oculto');
-        $$('#errorTitulo1Cat').removeClass('oculto').addClass('visible');
-    }
-    else
-    {
-        $$('#errorTitulo1Cat').removeClass('visible').addClass('oculto');
         console.log("no vacio");
-        if(cat.length>40)
-        {
-            $$('#errorTituloCat').removeClass('oculto').addClass('visible');
-        }
-        else
-        {
-            $$('#errorTituloCat').removeClass('visible').addClass('oculto');
-        }
     }
 }
-function validarTituloe(cat)
-{
-    console.log("dentro de validar: "+cat);
-    if(cat.length===0)
-    {
-        console.log("vacio");
-        $$('#errorTituloCate').removeClass('visible').addClass('oculto');
-        $$('#errorTitulo1Cate').removeClass('oculto').addClass('visible');
-    }
-    else
-    {
-        $$('#errorTitulo1Cate').removeClass('visible').addClass('oculto');
-        console.log("no vacio");
-        if(cat.length>40)
-        {
-            $$('#errorTituloCate').removeClass('oculto').addClass('visible');
-        }
-        else
-        {
-            $$('#errorTituloCate').removeClass('visible').addClass('oculto');
-        }
-    }
-}
+
 function guardarCategoria()
 {
     var bd=firebase.firestore();

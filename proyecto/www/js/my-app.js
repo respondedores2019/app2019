@@ -92,7 +92,6 @@ var arregloEliminarE=[]; // se usa para borrar pasos en editar enfermedad
 var nroNuevoPasoE=0; // se usa en editar al agregar mas pasos
 var recognition;
 
-
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     $$('.cerrar').on('click',cerrarSesion); //aca no anda
@@ -191,25 +190,38 @@ $$(document).on('page:init', '.page[data-name="iniciarSesion"]', function (e) {
 
 
 $$(document).on('page:init', '.page[data-name="nuevaCategoria"]', function (e) {
+
+    var textEntered = document.getElementById('titCategoria');
+    var countRemaining = document.getElementById('charactersRemaining');
+
+    textEntered.addEventListener('input', function(e) {
+        const target = e.target;
+        // Get the `maxlength` attribute
+        const maxLength = target.getAttribute('maxlength');
+        // Count the current number of characters
+        const currentLength = target.value.length;
+        if(currentLength !== 0){
+            $$('#errorTituloCat').removeClass('visible').addClass('oculto')
+        }
+        countRemaining.innerHTML = `${currentLength}/${maxLength}`; 
+    });
+
     $$('#guardarCategoria').on('click',function(){
-        var cat=$$('#titCategoria').val();
+        var cat = textEntered;
         console.log("dentro de myapp: "+cat);
-        validarTitulo(cat);
-        if($$('#errorTitulo1Cat').hasClass('oculto'))
+        validarTitulo(cat.value);
+        if($$('#errorTituloCat').hasClass('oculto'))
         {
-            if($$('#errorTituloCat').hasClass('oculto'))
-            {
-                console.log("entro bien");
-                guardarCategoria();
-            }
+            console.log("entro bien");
+            guardarCategoria();
         }
         else
         {
-            console.log("funcionp");
+            console.log("Titulo vacío");
         }
     });
 });
-
+    
 $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) {
     var bd=firebase.firestore();
     bd.collection('catalogo').get()
@@ -229,16 +241,31 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
             $$('#divNuevoTit').removeClass('oculto').addClass('visible');
             $$('#guardarCat').prop('disabled', false);
         }
-
     });
+
+    var textEntered = document.getElementById('titNuevoCat');
+    var countRemaining = document.getElementById('charactersRemaining');
+
+    textEntered.addEventListener('input', function(e) {
+        const target = e.target;
+        // Get the `maxlength` attribute
+        const maxLength = target.getAttribute('maxlength');
+        // Count the current number of characters
+        const currentLength = target.value.length;
+        if(currentLength !== 0){
+            $$('#errorTituloCat').removeClass('visible').addClass('oculto')
+        }
+        countRemaining.innerHTML = `${currentLength}/${maxLength}`;
+    });    
+
     $$('#guardarCat').on('click',function()
     {
         var cat=$$('#titNuevoCat').val();
         console.log("dentro de myapp: "+cat);
-        validarTituloe(cat);
-        if($$('#errorTitulo1Cate').hasClass('oculto'))
+        validarTitulo(cat);
+        if($$('#errorTituloCat').hasClass('oculto'))
         {
-            if($$('#errorTituloCate').hasClass('oculto'))
+            if($$('#errorTituloCat').hasClass('oculto'))
             {
                 console.log("entro bien");
                  guardarTitulo();
