@@ -7,23 +7,11 @@ function validarInfo(info)
             var paso=$$('#textoPaso'+jj).val();
             if(paso==="")
             {
-                $$('#errortextoenfermedad'+jj).removeClass('oculto');
-                $$('#errortextoenfermedad'+jj).addClass('visible');
+                $$('#errortextoenfermedad'+jj).removeClass('oculto').addClass('visible');
             }
             else
             {
-                $$('#errortextoenfermedad'+jj).removeClass('visible');
-                $$('#errortextoenfermedad'+jj).addClass('oculto');
-                if(paso.length>170)
-                {
-                    $$('#error2textoenfermedad'+jj).removeClass('oculto');
-                    $$('#error2textoenfermedad'+jj).addClass('visible');
-                }
-                else
-                {
-                    $$('#error2textoenfermedad'+jj).removeClass('visible');
-                    $$('#error2textoenfermedad'+jj).addClass('oculto');
-                }
+                $$('#errortextoenfermedad'+jj).removeClass('visible').addClass('oculto');
             }
              if($$('#audio'+jj).hasClass('nuevoPaso')===true)
              {
@@ -267,7 +255,6 @@ function cargarInfoEnfermedad(info)
     var bd=firebase.firestore();
     var arregloAudios=[];
     var arregloPasos=[];
-    var titOriginal="";
     bd.collection('subcatalogo').doc(info).get()
     .then(function(doc){
         var cantidad=doc.data().cantidad;
@@ -314,15 +301,41 @@ function cargarInfoEnfermedad(info)
                         var i=j+1;
                         if(arregloImagenes[j]===undefined)
                         {
-                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-85" disabled>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10 visible" ><i class="fas fa-edit"></i></a></div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo debe tener formato jpg, jpge o png.</div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
+                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPasoEdit" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-85" disabled minlength="1" maxlength="170" required>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPaso"><span id="current">'+arregloPasos[j].length+'</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'">Completar este campo.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10 visible" ><i class="fas fa-edit"></i></a></div></div><div class="card-header" id="IDaudioEdit" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menos a 500kb.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+                            //Validacion PASO con x cant de caracteres
+                            var textEnteredPaso = document.getElementById('textoPaso'+i+'');
+                            var countRemainingPaso = document.getElementById('charactersRemainingPaso');
+                    
+                            textEnteredPaso.addEventListener('input', function(e) {
+                                const targetPaso = e.target;
+                                const maxLengthPaso = targetPaso.getAttribute('maxlength');
+                                const currentLengthPaso = targetPaso.value.length;
+                                if(currentLengthPaso !== 0){
+                                    $$('#errortextoenfermedad'+i+'').removeClass('visible').addClass('oculto')
+                                }
+                                countRemainingPaso.innerHTML = `${currentLengthPaso}/${maxLengthPaso}`; 
+                            });
                         }
                         else
                         {
-                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-85" disabled>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10 visible" ><i class="fas fa-edit"></i></a></div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" class="imagenes oculto" name="imagen'+i+'" id="imagen'+i+'"><img src="'+arregloImagenes[j]+'" id="imgrep'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo debe tener formato jpg, jpge o png.</div><div class="item-media visible"  id="botoneditarImg'+i+'"><a href="#" id="imgedi'+i+'" class="editarImagen col-10 " ><i class="fas fa-edit"></i></a> </div>		<div class="item-media visible"  id="botonelImg'+i+'"><a href="#" id="imgel'+i+'" class="eliminarImagen col-10 " ><i class="fas fa-trash-alt"></i></a> </div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
+                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPasoEdit" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-85" disabled minlength="1" maxlength="170" required>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPaso"><span id="current">'+arregloPasos[j].length+'</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'">Completar este campo.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10 visible" ><i class="fas fa-edit"></i></a></div></div><div class="card-header" id="IDaudioEdit" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes oculto" name="imagen'+i+'" id="imagen'+i+'"><img src="'+arregloImagenes[j]+'" id="imgrep'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div><div class="item-media visible"  id="botoneditarImg'+i+'"><a href="#" id="imgedi'+i+'" class="editarImagen col-10 "><i class="fas fa-edit"></i></a></div><div class="item-media visible"  id="botonelImg'+i+'"><a href="#" id="imgel'+i+'" class="eliminarImagen col-10 "><i class="fas fa-trash-alt"></i></a></div></div><div class="card-footer"><button class=" button button-small button-fill eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+                            //Validacion PASO con x cant de caracteres
+                            var textEnteredPaso = document.getElementById('textoPaso'+i+'');
+                            var countRemainingPaso = document.getElementById('charactersRemainingPaso');
+                    
+                            textEnteredPaso.addEventListener('input', function(e) {
+                                const targetPaso = e.target;
+                                const maxLengthPaso = targetPaso.getAttribute('maxlength');
+                                const currentLengthPaso = targetPaso.value.length;
+                                if(currentLengthPaso !== 0){
+                                    $$('#errortextoenfermedad'+i+'').removeClass('visible').addClass('oculto')
+                                }
+                                countRemainingPaso.innerHTML = `${currentLengthPaso}/${maxLengthPaso}`; 
+                            });
                         }
                     }
 
-                    $$('#botonesExtra').append('<div class="list no-hairlines-md"><ul><li class="item-content item-input"><button class=" button button-small button-fill masPaso" id="masPaso">Mas Pasos</button> </li><li class="item-content item-input"><button class=" button button-small button-fill botonInicio" id="guardarEnfermedad">Guardar enfermedad</button> </li></ul></div>');
+                    $$('#botonesExtra').append('<div class="list no-hairlines-md"><ul><li class="item-content item-input"><button class=" button button-small button-fill masPaso" id="masPaso">Agregar paso</button> </li><li class="item-content item-input"><button class=" button button-small button-fill botonInicio" id="guardarEnfermedad">Guardar cambios</button> </li></ul></div>');
                     $$('#guardarEnfermedad').on('click',function(){
                         validarInfo(info);
                         var band2=false;
@@ -330,7 +343,7 @@ function cargarInfoEnfermedad(info)
                         {
                             if(arregloEliminarE.indexOf(j)===-1) // noesta en el arreglo
                             {
-                                if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#error2textoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error2audio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') )
+                                if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') || $$('#errorimagen'+j).hasClass('visible'))
                                 {
                                     band2=true;
                                 }
@@ -345,8 +358,22 @@ function cargarInfoEnfermedad(info)
                             app.dialog.alert('Verificar datos','Error');
                         }
                     });
+
                     $$('#masPaso').on('click',function(){
-                        $$('#pasosEditar').append('<div class="card" id="paso'+nroNuevoPasoE+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea placeholder="Ingrese el texto del paso" id="textoPaso'+nroNuevoPasoE+'" class="colorFondo"></textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+nroNuevoPasoE+'" >La cantidad de caracteres debe ser menor a 170.</div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" class="audios nuevoPaso" name="audio'+nroNuevoPasoE+'" id="audio'+nroNuevoPasoE+'"><div class="oculto textoerror" id="erroraudio'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error2audio'+nroNuevoPasoE+'" >El archivo debe tener formato mp3.</div><div class="oculto textoerror" id="error3audio'+nroNuevoPasoE+'" >El archivo debe durar menos de 30 segundos.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" class="imagenes nuevoPaso"  " name="imagen'+nroNuevoPasoE+'" id="imagen'+nroNuevoPasoE+'"><div class="oculto textoerror" id="errorimagen'+nroNuevoPasoE+'" >El archivo debe tener formato jpg, jpge o png.</div></div><div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+nroNuevoPasoE+'">Eliminar</button></div></div>');
+                        $$('#pasosEditar').append('<div class="card" id="paso'+nroNuevoPasoE+'"><div class="card-header" id="descPasoEdit" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea id="textoPaso'+nroNuevoPasoE+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+nroNuevoPasoE+'" >Completar este campo.</div></div><div class="card-header" id="IDaudioEdit" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios nuevoPaso" name="audio'+nroNuevoPasoE+'" id="audio'+nroNuevoPasoE+'"><div class="oculto textoerror" id="erroraudio'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+nroNuevoPasoE+'" >El archivo debe ser menor a 500kb.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes nuevoPaso" name="imagen'+nroNuevoPasoE+'" id="imagen'+nroNuevoPasoE+'"><div class="oculto textoerror" id="errorimagen'+nroNuevoPasoE+'" >El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+nroNuevoPasoE+'">Eliminar paso</button></div></div>');
+                        var textEnteredPasoExtra = document.getElementById('textoPaso'+nroNuevoPasoE+'');
+                        var countRemainingPasoExtra = document.getElementById('charactersRemainingPasoExtra');
+                
+                        textEnteredPasoExtra.addEventListener('input', function(e) {
+                            const targetPasoExtra = e.target;
+                            const maxLengthPasoExtra = targetPasoExtra.getAttribute('maxlength');
+                            const currentLengthPasoExtra = targetPasoExtra.value.length;
+                            if(currentLengthPasoExtra !== 0){
+                                $$('#errortextoenfermedad'+nroNuevoPasoE+'').removeClass('visible').addClass('oculto')
+                            }
+                            countRemainingPasoExtra.innerHTML = `${currentLengthPasoExtra}/${maxLengthPasoExtra}`; 
+                        });
+                        
                         nroNuevoPasoE++;
                         $$('.eliminarPaso').on('click',function(){
                             var id= parseInt(this.id);
@@ -357,6 +384,8 @@ function cargarInfoEnfermedad(info)
                     $$('.playEditar').on('click',function(){
                         var num=this.id.substr(6);
                         var audio = document.getElementById("audrep"+num);
+                        audio.load();
+                        audio.crossOrigin = 'anonymous';
                         var button = document.getElementById(this.id);
                         if (audio.paused)
                         {
@@ -371,8 +400,7 @@ function cargarInfoEnfermedad(info)
                     });
                     $$('.editar').on('click',function(){
                         var num=this.id.substr(3);
-                        $$('#textoPaso'+num).prop('disabled', false);
-                        $$('#textoPaso'+num).removeClass('colorFondo');
+                        $$('#textoPaso'+num).prop('disabled', false).removeClass('colorFondo');
                         $$('#edi'+num).removeClass('visible').addClass('oculto');
                     });
                     $$('.editarAudio').on('click',function(){
@@ -1016,7 +1044,6 @@ function cargarEnfermedad(enfermedad)
                             mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Ver foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
                         }
                     }
-                    //recognition.start();
                 }
                 $$('.fotos').on('click',function(){
                     var num=this.id.substr(3);
@@ -1046,6 +1073,8 @@ function cargarEnfermedad(enfermedad)
                 $$('.play').on('click',function(){
                     var num=this.id.substr(6);
                     var audio = document.getElementById("audrep"+num);
+                    audio.load();
+                    audio.crossOrigin = 'anonymous';
                     var button = document.getElementById(this.id);
                     if (audio.paused)
                     {
@@ -1078,35 +1107,26 @@ function cargarEnfermedad(enfermedad)
 }
 
 function fileValidation(file)
-{ // ver si validar con tamaño en kb o tiempo
+{
     var fileInput = document.getElementById("audio"+file);
     var filePath = fileInput.value;
     var allowedExtensions = /(.mp3)$/i;
     if(!allowedExtensions.exec(filePath))
     {
-        $$('#error2audio'+file).removeClass('oculto');
-        $$('#error2audio'+file).addClass('visible');
-        $$('#error3audio'+file).removeClass('visible');
-        $$('#error3audio'+file).addClass('oculto');
+        $$('#error3audio'+file).removeClass('visible').addClass('oculto');
         fileInput.value = '';
     }
     else
     {
-        $$('#error2audio'+file).removeClass('visible');
-        $$('#error2audio'+file).addClass('oculto');
-        var a=parseInt($$('#audio'+file)[0].files[0].size);
-        var b=a/1024;
-        var c=b*8;
-        var d=c/128;
-        if (d<30 && d>0)
+        var bytes=parseInt($$('#audio'+file)[0].files[0].size);
+        var kb = bytes/1024;
+        if (kb<500 && kb>0)
         {
-            $$('#error3audio'+file).removeClass('visible');
-            $$('#error3audio'+file).addClass('oculto');
+            $$('#error3audio'+file).removeClass('visible').addClass('oculto');
         }
         else
         {
-            $$('#error3audio'+file).removeClass('oculto');
-            $$('#error3audio'+file).addClass('visible');
+            $$('#error3audio'+file).removeClass('oculto').addClass('visible');
         }
     }
 }
@@ -1117,15 +1137,20 @@ function validarImagen(file)
     var allowedExtensions = /(.jpg|.jpeg|.png)$/i;
     if(!allowedExtensions.exec(filePath))
     {
-        $$('#errorimagen'+file).removeClass('oculto');
-        $$('#errorimagen'+file).addClass('visible');
+        $$('#errorimagen'+file).removeClass('visible').addClass('oculto');
         fileInput.value = '';
     }
     else
     {
-        $$('#errorimagen'+file).removeClass('visible');
-        $$('#errorimagen'+file).addClass('oculto');
-
-        //Falta validar tamaño del archivo
+        var bytes=parseInt($$('#imagen'+file)[0].files[0].size);
+        var kb = bytes/1024;
+        if (kb<300 && kb>0)
+        {
+            $$('#errorimagen'+file).removeClass('visible').addClass('oculto');
+        }
+        else
+        {
+            $$('#errorimagen'+file).removeClass('oculto').addClass('visible');
+        }
     }
 }

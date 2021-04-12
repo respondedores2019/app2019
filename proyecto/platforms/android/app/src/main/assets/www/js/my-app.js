@@ -98,28 +98,6 @@ $$(document).on('deviceready', function() {
     $$('.manualUsuario').on('click',function(){
          app.dialog.alert('Manual informativo en proceso de desarrollo','Lo sentimos :(');
     });
-    /*
-    recognition = new SpeechRecognition();
-    recognition.onresult = function(event) {
-        if (event.results.length > 0) {
-            //q.value = event.results[0][0].transcript;
-            //q.form.submit();
-            console.log("lo que dice cdo hablo "+ event.results[0][0].transcript);
-            var audio = document.getElementById("audrep"+1); // puse asi para que reproduzca el primer audio
-            var r=event.results[0][0].transcript;
-            if(r=="play")
-            {
-                console.log("play audio");
-                audio.play();
-
-            }
-            if(r=="stop")
-            {
-                console.log("stop audio");
-                audio.pause();
-            }
-        }
-    } */
 });
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
@@ -135,8 +113,7 @@ $$(document).on('page:init', '.page[data-name="about"]', function (e) {
 
 
 $$(document).on('page:init', '.page[data-name="home"]', function (e) {
-
-    var searchbar = app.searchbar.create({
+    app.searchbar.create({
       el: '.searchbar',
       searchContainer: '.list',
       searchIn: '.item-title',
@@ -156,7 +133,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
 });
 
 $$(document).on('page:init', '.page[data-name="enfermedad"]', function (e) {
-    var mySwiper = new Swiper('.swiper-container', {
+    new Swiper('.swiper-container', {
         speed: 400,
         spaceBetween: 100,
         pagination: {
@@ -190,15 +167,13 @@ $$(document).on('page:init', '.page[data-name="iniciarSesion"]', function (e) {
 
 
 $$(document).on('page:init', '.page[data-name="nuevaCategoria"]', function (e) {
-
+    //Validar que el usuario escriba sólo x cant de caracteres
     var textEntered = document.getElementById('titCategoria');
     var countRemaining = document.getElementById('charactersRemaining');
 
     textEntered.addEventListener('input', function(e) {
         const target = e.target;
-        // Get the `maxlength` attribute
         const maxLength = target.getAttribute('maxlength');
-        // Count the current number of characters
         const currentLength = target.value.length;
         if(currentLength !== 0){
             $$('#errorTituloCat').removeClass('visible').addClass('oculto')
@@ -207,9 +182,8 @@ $$(document).on('page:init', '.page[data-name="nuevaCategoria"]', function (e) {
     });
 
     $$('#guardarCategoria').on('click',function(){
-        var cat = textEntered;
-        console.log("dentro de myapp: "+cat);
-        validarTitulo(cat.value);
+        console.log("dentro de myapp: "+textEntered);
+        validarTitulo(textEntered.value);
         if($$('#errorTituloCat').hasClass('oculto'))
         {
             console.log("entro bien");
@@ -258,11 +232,9 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
         countRemaining.innerHTML = `${currentLength}/${maxLength}`;
     });    
 
-    $$('#guardarCat').on('click',function()
-    {
-        var cat=$$('#titNuevoCat').val();
-        console.log("dentro de myapp: "+cat);
-        validarTitulo(cat);
+    $$('#guardarCat').on('click',function(){
+        console.log("dentro de myapp: "+textEntered);
+        validarTitulo(textEntered.value);
         if($$('#errorTituloCat').hasClass('oculto'))
         {
             if($$('#errorTituloCat').hasClass('oculto'))
@@ -322,11 +294,54 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
             $$('#subcategoria').removeClass('visible').addClass('oculto');
         }
     });
+
+    //Validacion TITULO con x cant de caracteres
+    var textEntered = document.getElementById('tituloE');
+    var countRemaining = document.getElementById('charactersRemaining');
+
+    textEntered.addEventListener('input', function(e) {
+        const target = e.target;
+        const maxLength = target.getAttribute('maxlength');
+        const currentLength = target.value.length;
+        if(currentLength !== 0){
+            $$('#errorTitulo').removeClass('visible').addClass('oculto')
+        }
+        countRemaining.innerHTML = `${currentLength}/${maxLength}`; 
+    });
+
+    //Validacion PASO con x cant de caracteres
+    var textEnteredPaso = document.getElementById('textoenfermedad1');
+    var countRemainingPaso = document.getElementById('charactersRemainingPaso');
+
+    textEnteredPaso.addEventListener('input', function(e) {
+        const targetPaso = e.target;
+        const maxLengthPaso = targetPaso.getAttribute('maxlength');
+        const currentLengthPaso = targetPaso.value.length;
+        if(currentLengthPaso !== 0){
+            $$('#errortextoenfermedad1').removeClass('visible').addClass('oculto')
+        }
+        countRemainingPaso.innerHTML = `${currentLengthPaso}/${maxLengthPaso}`; 
+    });
+
     arregloEliminarN=[];
     var i=2;
-    $$('.masPaso').on('click',function(){
 
-        $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="card-header"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea placeholder="Ingrese el texto del paso" id="textoenfermedad'+i+'" class=""></textarea><span class="input-clear-button"></span><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error2textoenfermedad'+i+'" >La cantidad de caracteres debe ser menor a 170.</div></div><div class="card-header"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div> <div class="oculto textoerror" id="error2audio'+i+'" >El archivo debe tener formato mp3.</div> <div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe durar menos de 30 segundos.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen1" >El archivo debe tener formato jpg, jpge o png.</div></div> <div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+i+'">Eliminar</button></div></div>');
+    $$('.masPaso').on('click',function(){
+        $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPaso" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea id="textoenfermedad'+i+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div></div><div class="card-header" id="IDaudio" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen'+i+'">El archivo no puede pesar más de 300kb</div><div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+        //Validacion PASO EXTRA con x cant de caracteres
+        var textEnteredPasoExtra = document.getElementById('textoenfermedad'+i+'');
+        var countRemainingPasoExtra = document.getElementById('charactersRemainingPasoExtra');
+
+        textEnteredPasoExtra.addEventListener('input', function(e) {
+            const targetPasoExtra = e.target;
+            const maxLengthPasoExtra = targetPasoExtra.getAttribute('maxlength');
+            const currentLengthPasoExtra = targetPasoExtra.value.length;
+            if(currentLengthPasoExtra !== 0){
+                $$('#errortextoenfermedad'+i+'').removeClass('visible').addClass('oculto')
+            }
+            countRemainingPasoExtra.innerHTML = `${currentLengthPasoExtra}/${maxLengthPasoExtra}`; 
+        });
+
         if($$('#tituloE').val()==="")
         {
             $$('.audios').prop('disabled', true);
@@ -340,67 +355,50 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
         i++;
         $$('.eliminarPaso').on('click',function(){
             var id= parseInt(this.id);
-
             arregloEliminarN.push(id);
             $$('#paso'+id).remove();
         });
     });
+
     $$('#guardarEnfermedad').on('click',function(){
-        if($$('#tituloE').val()!=="")
+        if(textEntered.value !=="")
         {
-            var cat=$$('#tituloE').val();
-            validarTitulo(cat);
+            validarTitulo(textEntered.value);
             for(var j=1;j<i;j++)
             {
                 if(arregloEliminarN.indexOf(j)===-1) // noesta en el arreglo
-                {
-
+                {   
                     var paso=$$('#textoenfermedad'+j).val();
                     if(paso==="")
                     {
-                        $$('#errortextoenfermedad'+j).removeClass('oculto');
-                        $$('#errortextoenfermedad'+j).addClass('visible');
+                        $$('#errortextoenfermedad'+j).removeClass('oculto').addClass('visible');
                     }
                     else
                     {
-                        $$('#errortextoenfermedad'+j).removeClass('visible');
-                        $$('#errortextoenfermedad'+j).addClass('oculto');
-                        if($$('#textoenfermedad'+j).val().length>170)
-                        {
-                            $$('#error2textoenfermedad'+j).removeClass('oculto');
-                            $$('#error2textoenfermedad'+j).addClass('visible');
-                        }
-                        else
-                        {
-                            $$('#error2textoenfermedad'+j).removeClass('visible');
-                            $$('#error2textoenfermedad'+j).addClass('oculto');
-                        }
-
+                        $$('#errortextoenfermedad'+j).removeClass('visible').addClass('oculto');
                     }
                     if(document.getElementById('audio'+j).files.length === 0)
                     {
-                        $$('#erroraudio'+j).removeClass('oculto');
-                        $$('#erroraudio'+j).addClass('visible');
+                        $$('#erroraudio'+j).removeClass('oculto').addClass('visible');
                     }
                     else
                     {
                         fileValidation(j);
-                        $$('#erroraudio'+j).removeClass('visible');
-                        $$('#erroraudio'+j).addClass('oculto');
+                        $$('#erroraudio'+j).removeClass('visible').addClass('oculto');
                     }
-                     if(document.getElementById('imagen'+j).files.length !== 0)
-                     {
-                         validarImagen(j);
-                     }
+                    if(document.getElementById('imagen'+j).files.length !== 0)
+                    {
+                        validarImagen(j);
+                        $$('#errorimagen'+j).removeClass('visible').addClass('oculto');
+                    }
                 }
-
             }
             var band=false;
             for(var j=0;j<i;j++)
             {
                 if(arregloEliminarN.indexOf(j)===-1) // noesta en el arreglo
                 {
-                    if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#error2textoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error2audio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') || $$('#errorimagen'+j).hasClass('visible'))
+                    if($$('#errortextoenfermedad'+j).hasClass('visible') || $$('#erroraudio'+j).hasClass('visible') || $$('#error3audio'+j).hasClass('visible') || $$('#errorTitulo').hasClass('visible') || $$('#errorimagen'+j).hasClass('visible'))
                     {
                         band=true;
                     }
@@ -426,7 +424,6 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
     });
     $$('#1').on('click',function(){
         var id= parseInt(this.id);
-
          arregloEliminarN.push(id);
          $$('#paso'+id).remove();
     });
@@ -434,7 +431,7 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
 
 
 $$(document).on('page:init', '.page[data-name="editarEnfermedad"]', function (e) {
-    var searchbar = app.searchbar.create({
+    app.searchbar.create({
       el: '.searchbar',
       searchContainer: '.list',
       searchIn: '.item-title',
@@ -455,12 +452,19 @@ $$(document).on('page:init', '.page[data-name="editarEnfermedad"]', function (e)
 });
 
 $$(document).on('page:init', '.page[data-name="infoEnfermedad"]', function (e) {
+    if(nom !== info)
+    {
+        var nn=nom + "  " +info;
+    }
+    else{
+        var nn=info;
+    }
+    $$('#nombre').html(nn);
     cargarInfoEnfermedad(info);
 });
 
 $$(document).on('page:init', '.page[data-name="eliminarEnfermedad"]', function (e) {
-
-    var searchbar = app.searchbar.create({
+    app.searchbar.create({
       el: '.searchbar',
       searchContainer: '.list',
       searchIn: '.item-title',
@@ -484,7 +488,7 @@ $$(document).on('page:init', '.page[data-name="eliminarEnfermedad"]', function (
 
 
 $$(document).on('page:init', '.page[data-name="eliminarCategoria"]', function (e) {
-    var searchbar = app.searchbar.create({
+    app.searchbar.create({
       el: '.searchbar',
       searchContainer: '.list',
       searchIn: '.item-title',
@@ -501,4 +505,3 @@ $$(document).on('page:init', '.page[data-name="eliminarCategoria"]', function (e
     });
     $$('#confirmarEliminar').on('click',eliminarCategoria);
 });
-
