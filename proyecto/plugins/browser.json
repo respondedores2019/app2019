@@ -12,10 +12,28 @@
     },
     "phonegap-plugin-speech-recognition": {
       "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-downloader": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
     }
   },
   "dependent_plugins": {
     "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.phonegap.helloworld"
+    },
+    "cordova-plugin-zip": {
       "PACKAGE_NAME": "com.phonegap.helloworld"
     }
   }

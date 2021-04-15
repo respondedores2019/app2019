@@ -1,8 +1,8 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "Respondedores",
-  "short_name": "Respondedores",
+  "name": "Primeros Respondedores",
+  "short_name": "Primeros Respondedores",
   "version": "com.phonegap.helloworld",
   "description": "A basic Framework7 template for PhoneGap.",
   "author": "Apache Cordova Team",

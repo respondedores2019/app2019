@@ -7,7 +7,7 @@
                 <span class="ios-only">Back</span>
                 </a>
             </div>
-             <div class="title">Primeros respondedores</div>
+             <div class="title">Nueva categoría</div>
             <div class="right">
                 <a class="panel-open" href="#" data-panel="right">
                     <i class="fas fa-bars iconopanel"></i>
@@ -17,15 +17,18 @@
     </div>
     <div class="page-content">
         <div class="card" id="card-cat">
-            <div class="card-header"><b>Titulo de categoria:</b></div>
-            <div class="card-content card-content-padding">
-                <input type="text" placeholder="Ingrese el titulo" id="titCategoria">
+            <div class="card-header" id="tituloCategoria" style="float: left;"><b>Título de categoría:</b></div>
+            <div class="card-content card-content-padding" id="card-titCategoria"> 
+                <textarea id="titCategoria" cols="40" minlength="1" maxlength="40" required placeholder="Ingrese el título..." autofocus ></textarea>
                 <span class="input-clear-button"></span>
-                <div class="oculto textoerror" id="errorTituloCat" >La cantidad de caracteres debe ser menor a 40.</div>
-                <div class="oculto textoerror" id="errorTitulo1Cat" >El titulo no puede estar vacio.</div>
+                <div class="text-right mt-1" id="charactersRemaining">
+                    <span id="current">0</span>
+                    <span id="maximum">/ 40</span>
+                </div>
+                <div class="oculto textoerror" id="errorTituloCat" >El título no puede estar vacío.</div>
             </div>
-            <div class="card-footer">
-                 <button class=" button button-small button-fill botonInicio" id="guardarCategoria">Guardar categoria</button>
+            <div class="card-footer" id="cardfooter-titCategoria">
+                 <button class="button button-small button-fill botonInicio" id="guardarCategoria">Guardar categoría</button>
             </div>
         </div>
     </div>

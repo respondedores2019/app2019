@@ -7,7 +7,24 @@
     <feature name="SpeechRecognition">
         <param name="android-package" value="org.apache.cordova.speech.SpeechRecognition" />
     </feature>
-    <name>Respondedores</name>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="FileOpener2">
+        <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <allow-navigation href="cdvfile:*" />
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="Zip">
+        <param name="android-package" value="org.apache.cordova.Zip" />
+    </feature>
+    <name>Primeros Respondedores</name>
     <description>
         A basic Framework7 template for PhoneGap.
     </description>
@@ -25,24 +42,24 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
-    <icon density="ldpi" src="res/icon/android/anime.jpg" />
-    <icon density="mdpi" src="res/icon/android/anime.jpg" />
-    <icon density="hdpi" src="res/icon/android/anime.jpg" />
-    <icon density="xhdpi" src="res/icon/android/anime.jpg" />
-    <icon density="xxhdpi" src="res/icon/android/anime.jpg" />
-    <icon density="xxxhdpi" src="res/icon/android/anime.jpg" />
-    <splash density="land-ldpi" src="res/screen/android/anime.jpg" />
-    <splash density="land-mdpi" src="res/screen/android/anime.jpg" />
-    <splash density="land-hdpi" src="res/screen/android/anime.jpg" />
-    <splash density="land-xhdpi" src="res/screen/android/anime.jpg" />
-    <splash density="land-xxhdpi" src="res/screen/android/anime.jpg" />
-    <splash density="land-xxxhdpi" src="res/screen/android/anime.jpg" />
-    <splash density="port-ldpi" src="res/screen/android/anime.jpg" />
-    <splash density="port-mdpi" src="res/screen/android/anime.jpg" />
-    <splash density="port-hdpi" src="res/screen/android/anime.jpg" />
-    <splash density="port-xhdpi" src="res/screen/android/anime.jpg" />
-    <splash density="port-xxhdpi" src="res/screen/android/anime.jpg" />
-    <splash density="port-xxxhdpi" src="res/screen/android/anime.jpg" />
+    <icon density="ldpi" src="res/icon/android/elivery.png" />
+    <icon density="mdpi" src="res/icon/android/elivery.png" />
+    <icon density="hdpi" src="res/icon/android/elivery.png" />
+    <icon density="xhdpi" src="res/icon/android/elivery.png" />
+    <icon density="xxhdpi" src="res/icon/android/elivery.png" />
+    <icon density="xxxhdpi" src="res/icon/android/elivery.png" />
+    <splash density="land-ldpi" src="res/screen/android/elivery.png" />
+    <splash density="land-mdpi" src="res/screen/android/elivery.png" />
+    <splash density="land-hdpi" src="res/screen/android/elivery.png" />
+    <splash density="land-xhdpi" src="res/screen/android/elivery.png" />
+    <splash density="land-xxhdpi" src="res/screen/android/elivery.png" />
+    <splash density="land-xxxhdpi" src="res/screen/android/elivery.png" />
+    <splash density="port-ldpi" src="res/screen/android/elivery.png" />
+    <splash density="port-mdpi" src="res/screen/android/elivery.png" />
+    <splash density="port-hdpi" src="res/screen/android/elivery.png" />
+    <splash density="port-xhdpi" src="res/screen/android/elivery.png" />
+    <splash density="port-xxhdpi" src="res/screen/android/elivery.png" />
+    <splash density="port-xxxhdpi" src="res/screen/android/elivery.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="DisallowOverscroll" value="true" />
 </widget>

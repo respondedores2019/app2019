@@ -1,1 +1,1 @@
-{"plugins":["cordova-plugin-file","cordova-plugin-whitelist","cordova-plugin-compat","phonegap-plugin-speech-recognition"]}
+{"plugins":["cordova-plugin-file","cordova-plugin-whitelist","cordova-plugin-compat","phonegap-plugin-speech-recognition","cordova-plugin-inappbrowser","cordova-plugin-file-opener2","cordova-plugin-file-transfer","cordova-plugin-downloader","cordova-plugin-zip"]}

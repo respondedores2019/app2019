@@ -1029,7 +1029,7 @@ function cargarEnfermedad(enfermedad)
                         var kk=j+1;
                         if(arregloPasos.length===1)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'">Ver foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla" id="visor"><a href="#" class="fotos" id="fot'+j+'" name="fotoVisor">Ver foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
                         }
                         else if(j===0)
                         {
@@ -1152,5 +1152,83 @@ function validarImagen(file)
         {
             $$('#errorimagen'+file).removeClass('oculto').addClass('visible');
         }
+    }
+}
+
+function archivo(evt) {
+    var fotos = evt.target.fotos; // FileList object
+
+    // Obtenemos la imagen del campo "file".
+    for (var i = 0, f; f = fotos[i]; i++) {
+      //Solo admitimos imágenes.
+      if (!f.type.match('image.*')) {
+          continue;
+      }
+      var reader = new FileReader();
+      reader.onload = (function(theFile) {
+          return function(e) {
+            // Insertamos la imagen
+           document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+          };
+      })(f);
+
+      reader.readAsDataURL(f);
+    }
+}
+
+function loadStopCallBack(refTemp) {
+    if(refTemp.url.includes('manual_1ros_auxilios_web.pdf')) {
+        rtaParam = getURLParams('manual_1ros_auxilios_web.pdf', refTemp.url);
+
+        if(rtaParam != null)
+            downloadFileFromServer(rtaParam);
+        return;
+    }
+}
+
+function getURLParams( name, url ) {
+    try {
+        if (!url)
+            url = location.href;
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(url);
+        return results == null ? null : results[1];
+    } catch (e) {
+        showSMS(e);
+        return null;
+    }
+}
+function downloadFileFromServer(fileServerURL){
+    try {
+        var Downloader = window.plugins.Downloader;
+        var fileName = fileServerURL.substring(fileServerURL.lastIndexOf("/") + 1);
+
+        var downloadSuccessCallback = function(result) {
+            path= "/storage/emulated/0/Download/manual_1ros_auxilios_web.pdf", // Returns full file path
+            file= "manual_1ros_auxilios_web.pdf", // Returns Filename
+            folder= "Download" // Returns folder name
+            console.log(result.path); 
+        };
+
+        var downloadErrorCallback = function(error) {
+            // error: string
+            console.log(error);
+        };
+    
+        var options = {
+            title: 'Descargando '+ fileName, // Download Notification Title
+            url: fileServerURL, // File Url
+            path: fileName, // The File Name with extension
+            description: 'La descarga del archivo esta lista', // Download description Notification String
+            visible: true, // This download is visible and shows in the notifications while in progress and after completion.
+            folder: "Download" // Folder to save the downloaded file, if not exist it will be created
+        };
+    
+        Downloader.download(options, downloadSuccessCallback, downloadErrorCallback);
+
+    } catch (e) {
+        console.log(e);
     }
 }

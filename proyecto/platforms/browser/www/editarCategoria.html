@@ -7,7 +7,7 @@
                 <span class="ios-only">Back</span>
                 </a>
             </div>
-         <div class="title">Primeros respondedores</div>
+         <div class="title">Editar categoría</div>
             <div class="right">
                 <a class="panel-open" href="#" data-panel="right">
                     <i class="fas fa-bars iconopanel"></i>
@@ -18,29 +18,32 @@
     <div class="page-content">
         <div class="card">
             <div class="card-header">
-            	<b>Titulo</b>
+            	<b>Categoría a editar</b>
             </div>
             <div class="card-content card-content-padding">
             	<div class="row item-input-wrap input-dropdown-wrap">
             		<select id="ediTitC" class="opciones">
-                            <option value="0">Seleccione una categoria</option>
+                            <option value="0">Seleccione una categoría</option>
             		</select>
             	</div>
             	<div class="oculto row" id="divNuevoTit">
                         <br/>
                         <br/>
-                		<b>Nuevo titulo:</b>
-                    <div class="card-content card-content-padding row">
-                		<input type="text" placeholder="Ingrese nuevo titulo" id="titNuevoCat"/>
+                		<b>Nuevo título:</b>
+                    <div class="card-content card-content-padding row" id="card-titCategoriaEdit">
+                        <textarea id="titNuevoCat" cols="40" minlength="1" maxlength="40" required placeholder="Ingrese el nuevo título..." autofocus ></textarea>
                 		<span class="input-clear-button"></span>
-                        <div class="oculto textoerror" id="errorTituloCate" >La cantidad de caracteres debe ser menor a 40.</div>
-                        <div class="oculto textoerror" id="errorTitulo1Cate" >El titulo no puede estar vacio.</div>
+                        <div class="text-right mt-1" id="charactersRemaining">
+                            <span id="current">0</span>
+                            <span id="maximum">/ 40</span>
+                        </div>
+                        <div class="oculto textoerror" id="errorTituloCat" >El título no puede estar vacío.</div>
                     </div>
-            	</div>
+                </div>
             </div>
-            <div class="card-footer" id="footerEdCat">
-                <button class=" button button-small button-fill" id="guardarCat" disabled>Guardar</button>
-            </div>
-         </div>
+        </div>
+        <div class="card-footer" id="footerEdCat">
+            <button class=" button button-small button-fill botonInicio" id="guardarCat" disabled>Guardar cambios</button>
+        </div>
     </div>
 </div>

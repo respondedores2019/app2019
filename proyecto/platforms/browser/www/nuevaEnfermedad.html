@@ -7,7 +7,7 @@
                 <span class="ios-only">Back</span>
                 </a>
             </div>
-             <div class="title">Primeros respondedores</div>
+             <div class="title">Nueva enfermedad</div>
             <div class="right">
                 <a class="panel-open" href="#" data-panel="right">
                     <i class="fas fa-bars iconopanel"></i>
@@ -18,7 +18,7 @@
     <div class="page-content">
         <div id="agregarpasos">
             <div class="card">
-                <div class="card-header"><b>¿Pertenece a una categoria?</b></div>
+                <div class="card-header"><b>¿Pertenece a una categoría?</b></div>
                 <div class="card-content card-content-padding">
                     <div class="item-input-wrap input-dropdown-wrap">
                         <select id="tipoCat">
@@ -27,7 +27,7 @@
                         </select>
                     </div>
                     <div id="subcategoria" class="oculto">
-                        <b>Categoria: </b>
+                        <b>Categoría: </b>
                         <div class="item-input-wrap input-dropdown-wrap">
                             <select id="idCat"></select>
                         </div>
@@ -35,42 +35,48 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header"><b>Titulo</b></div>
+                <div class="card-header" id="tituloEnfermedad" style="float: left;"><b>Título</b></div>
                 <div class="card-content card-content-padding">
-                    <input type="text" placeholder="Ingrese el titulo" id="tituloE">
+                    <textarea id="tituloE" minlength="1" maxlength="40" required placeholder="Ingrese el título..." autofocus ></textarea>
                     <span class="input-clear-button"></span>
-                    <div class="oculto textoerror" id="errorTitulo" >La cantidad de caracteres debe ser menor a 40.</div>
+                    <div class="text-right mt-1" id="charactersRemaining">
+                        <span id="current">0</span>
+                        <span id="maximum">/ 40</span>
+                    </div>
+                    <div class="oculto textoerror" id="errorTitulo" >El título no puede estar vacío.</div>
                 </div>
             </div>
             <div class="card" id="paso1">
-                <div class="card-header"><b>Paso:</b></div>
+                <div class="card-header" id="descPaso" style="float: left;"><b>Paso:</b></div>
                 <div class="card-content card-content-padding">
-                    <textarea placeholder="Ingrese el texto del paso" id="textoenfermedad1" class=""></textarea> <!-- Agrandar espacio de texto-->
+                    <textarea id="textoenfermedad1" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus ></textarea>
                     <span class="input-clear-button"></span>
+                    <div class="text-right mt-1" id="charactersRemainingPaso">
+                        <span id="current">0</span>
+                        <span id="maximum">/ 170</span>
+                    </div>
                     <div class="oculto textoerror" id="errortextoenfermedad1" >Completar este campo.</div>
-                    <div class="oculto textoerror" id="error2textoenfermedad1" >La cantidad de caracteres debe ser menor a 170.</div>
                 </div>
-                <div class="card-header"><b>Audio:</b></div>
+                <div class="card-header" id="IDaudio" style="float: left;"><b>Audio:</b></div>
                 <div class="card-content card-content-padding">
-                    <input type="file" class="audios" name="audio1" id="audio1" disabled >
+                    <input type="file" accept="audio/mpeg, audio/mp3" max-size="491520" class="audios" name="audio1" id="audio1" required disabled >
                     <div class="oculto textoerror" id="erroraudio1" >Completar este campo.</div>
-                    <div class="oculto textoerror" id="error2audio1" >El archivo debe tener formato mp3.</div>
-                    <div class="oculto textoerror" id="error3audio1" >El archivo debe durar menos de 30 segundos.</div>
+                    <div class="oculto textoerror" id="error3audio1" >El archivo debe ser menor a 500kb</div>
                 </div>
                 <div class="card-header"><b>Imagen:</b></div>
                 <div class="card-content card-content-padding">
-                    <input type="file" class="imagenes" name="imagen1" id="imagen1" disabled>
-                    <div class="oculto textoerror" id="errorimagen1" >El archivo debe tener formato jpg, jpge o png.</div>
+                    <input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen1" id="imagen1" disabled>
+                    <div class="oculto textoerror" id="errorimagen" >El archivo no puede pesar más de 300kb</div>
                 </div>
                 <div class="card-footer">
-                    <button class=" button button-small button-fill eliminarPaso" id="1">Eliminar</button>
+                    <button class=" button button-small button-fill eliminarPaso" id="1">Eliminar paso</button>
                 </div>
             </div>
         </div>
         <div class="list no-hairlines-md">
             <ul>
                 <li class="item-content item-input">
-                    <button class=" button button-small button-fill masPaso" id="masPaso">Mas Pasos</button>
+                    <button class=" button button-small button-fill masPaso" id="masPaso">Agregar paso</button>
                 </li>
                 <li class="item-content item-input">
                     <button class=" button button-small button-fill botonInicio" id="guardarEnfermedad">Guardar enfermedad</button>

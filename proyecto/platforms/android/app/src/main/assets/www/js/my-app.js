@@ -96,7 +96,18 @@ var recognition;
 $$(document).on('deviceready', function() {
     $$('.cerrar').on('click',cerrarSesion); //aca no anda
     $$('.manualUsuario').on('click',function(){
-         app.dialog.alert('Manual informativo en proceso de desarrollo','Lo sentimos :(');
+        //app.dialog.alert('Manual informativo en proceso de desarrollo','Lo sentimos :(');
+        document.addEventListener('deviceready', onDeviceReady, false);
+            function onDeviceReady() {
+                var inAppBrowserRef;
+  
+                inAppBrowserRef = cordova.InAppBrowser.open('https://www.argentina.gob.ar/sites/default/files/manual_1ros_auxilios_web.pdf','_system','location=yes');
+                //inAppBrowserRef.addEventListener('loadstart', loadStartCallBack);
+                inAppBrowserRef.addEventListener('loadstop', function(){loadStopCallBack('https://www.argentina.gob.ar/sites/default/files/manual_1ros_auxilios_web.pdf')});
+                //inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
+                //inAppBrowserRef.addEventListener('beforeload', beforeloadCallBack);
+                //inAppBrowserRef.addEventListener('message', messageCallBack); 
+        }    
     });
 });
 // Option 1. Using one 'page:init' handler for all pages
@@ -153,6 +164,9 @@ $$(document).on('page:init', '.page[data-name="enfermedad"]', function (e) {
 
     $$('#nombre').html(nn);
     cargarEnfermedad(enfermedadBusqueda);
+
+    archivo(evt);
+    document.getElementById('fotos').addEventListener('change', archivo, false);
 });
 
 $$(document).on('page:init', '.page[data-name="iniciarSesion"]', function (e) {

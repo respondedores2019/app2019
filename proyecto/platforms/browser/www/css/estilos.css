@@ -2,12 +2,13 @@
 @import url('https://fonts.googleapis.com/css?family=Rye&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Bungee+Inline&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+
 #ima
 {
-    margin-top:5vh;
-    margin-left:20vw;
-    width:60vw;
-    height: 40vh;
+    /*margin-top:1vh;
+    margin-left:15vw;*/
+    width:100vw;
+    height: 100vh;
 }
 .colorFondo
 {
@@ -48,11 +49,6 @@
 {
     margin-top:6vh;
 }
-#card-cat
-{
-    margin-top:10vh;
-}
-
 .botonAdmin
 {
     margin-top:7vh;
@@ -62,8 +58,8 @@
     margin-right:auto;
 }
 .botonInicio
-{
-    margin-top:5vh;
+{   
+    /*margin-top:5vh;*/
     width:60vw;
     margin-left:auto;
     margin-right:auto;
@@ -81,9 +77,9 @@
 {
     background-color:white;
 }
-#masPaso ,#masPasos ,.eliminarPaso
+#masPaso ,#masPasos, .eliminarPaso
 {
-    width:27vw;
+    width:35vw;
     margin-left:auto;
     margin-right:2vw;
 }
@@ -180,26 +176,41 @@ textarea
 {
      width:85vw;
      height: 10vh;
+     float: center;
      resize: vertical;
      overflow: auto;
      border: 1px solid #ff8833;
-     padding-left: 2vw;
+     margin-top: 7vh;
 }
-#titNuevoC
+
+#card-titCategoria{
+    height: 20vh;
+    float: center;
+    text-align: center;
+    resize: vertical;
+}
+
+#tituloCategoria::before, #divNuevoTit b::before, #tituloEnfermedad::before, #descPaso::before,#IDaudio::before, #descPasoEdit::before, #IDaudioEdit::before
 {
-   height:10vh;
+    content:"*  ";
+    color:red;
+    font-weight: bold;
+    margin-right: 1vw;
 }
+
+#charactersRemaining, #charactersRemainingPaso, #charactersRemainingPasoExtra {
+    float: right;
+    padding-right: 1vw;
+    font-size: 0.875rem;
+
+}
+
 #nuevo,#editar,#nuevoC,#editarC,#eliminar,#eliminarC
 {
     text-align:center;
     vertical-align:super!important;
 }
-#tituloE,#titCategoria
-{
-    height: 8vh;
-    padding-left: 2vw;
-    width: 90vw;
-}
+ 
 #cedi
 {
     margin-left:50vw;
