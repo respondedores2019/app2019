@@ -63,3 +63,37 @@ document.getElementById('fotos').addEventListener('change', archivo, false);
              mititulo.innerHTML=t; //cambiar pie de foto
              }
     </script>
+
+
+<img src='foto1.jpg' alt='1. India - Agra - El Taj Majal.' name='fotoVisor'/>
+
+arregloImagenes[j]
+
+<img id="fot'+j+'" src="'+arregloImagenes[j]+'" class="fotoVisor">
+
+
+<button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button>
+
+<audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio>
+<button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button>
+
+
+<div class="card-content card-content-padding row">
+    <input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'">
+    
+    <audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio>
+    <button class="col-75 playEditar button button-fill visible" id="audbot'+i+'">Reproducir</button>
+
+    <div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div>
+    <div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menos a 500kb.</div>
+    <div class="item-media">
+        <a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" >
+            <i class="fas fa-edit"></i>
+        </a> 
+    </div>
+</div>
+<div class="card-header"><b>Imagen:</b></div>
+<div class="card-content card-content-padding row">
+    <input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'">
+    <div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div>
+</div>

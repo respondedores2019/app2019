@@ -187,7 +187,11 @@ $$(document).on('page:init', '.page[data-name="nuevaCategoria"]', function (e) {
         const maxLength = target.getAttribute('maxlength');
         const currentLength = target.value.length;
         if(currentLength !== 0){
-            $$('#errorTituloCat').removeClass('visible').addClass('oculto')
+            $$('#errorTituloCat').removeClass('visible').addClass('oculto');
+            $$('#guardarCategoria').removeClass('disabled')
+        }
+        else{
+            $$('#guardarCategoria').addClass('disabled')
         }
         countRemaining.innerHTML = `${currentLength}/${maxLength}`; 
     });
@@ -220,6 +224,7 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
         {
             $$('#divNuevoTit').removeClass('visible').addClass('oculto');
             $$('#guardarCat').prop('disabled', true);
+            $$('#guardarCat').addClass('disabled');
         }
         else
         {
@@ -239,6 +244,10 @@ $$(document).on('page:init', '.page[data-name="editarCategoria"]', function (e) 
         const currentLength = target.value.length;
         if(currentLength !== 0){
             $$('#errorTituloCat').removeClass('visible').addClass('oculto')
+            $$('#guardarCat').removeClass('disabled')
+        }
+        else{
+            $$('#guardarCat').addClass('disabled')
         }
         countRemaining.innerHTML = `${currentLength}/${maxLength}`;
     });    
@@ -315,7 +324,13 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
         const maxLength = target.getAttribute('maxlength');
         const currentLength = target.value.length;
         if(currentLength !== 0){
-            $$('#errorTitulo').removeClass('visible').addClass('oculto')
+            $$('#errorTitulo').removeClass('visible').addClass('oculto');
+            $$('.audios').prop('disabled', false);
+            $$('.imagenes').prop('disabled', false);
+        }
+        else{
+            $$('.audios').prop('disabled', true);
+            $$('.imagenes').prop('disabled', true);
         }
         countRemaining.innerHTML = `${currentLength}/${maxLength}`; 
     });
@@ -330,15 +345,19 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
         const currentLengthPaso = targetPaso.value.length;
         if(currentLengthPaso !== 0){
             $$('#errortextoenfermedad1').removeClass('visible').addClass('oculto')
+            $$('#guardarEnfermedad').removeClass('disabled');
+        }
+        else{
+            $$('#guardarEnfermedad').addClass('disabled');
         }
         countRemainingPaso.innerHTML = `${currentLengthPaso}/${maxLengthPaso}`; 
-    });
+    });         
 
     arregloEliminarN=[];
     var i=2;
 
     $$('.masPaso').on('click',function(){
-        $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPaso" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea id="textoenfermedad'+i+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div></div><div class="card-header" id="IDaudio" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen'+i+'">El archivo no puede pesar más de 300kb</div><div class="card-footer"><button class=" button button-small button-fill eli eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+        $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPaso" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea id="textoenfermedad'+i+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div></div><div class="card-header" id="IDaudio" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen'+i+'">El archivo no puede pesar más de 300kb</div><div class="card-footer"><button class=" button button-small button-outline color-red eli eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
         //Validacion PASO EXTRA con x cant de caracteres
         var textEnteredPasoExtra = document.getElementById('textoenfermedad'+i+'');
         var countRemainingPasoExtra = document.getElementById('charactersRemainingPasoExtra');
@@ -348,21 +367,15 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
             const maxLengthPasoExtra = targetPasoExtra.getAttribute('maxlength');
             const currentLengthPasoExtra = targetPasoExtra.value.length;
             if(currentLengthPasoExtra !== 0){
-                $$('#errortextoenfermedad'+i+'').removeClass('visible').addClass('oculto')
+                $$('#errortextoenfermedad'+i+'').removeClass('visible').addClass('oculto');
+                $$('#guardarEnfermedad').removeClass('disabled');
             }
+            else
+            {
+                $$('#guardarEnfermedad').addClass('disabled');
+            }    
             countRemainingPasoExtra.innerHTML = `${currentLengthPasoExtra}/${maxLengthPasoExtra}`; 
-        });
-
-        if($$('#tituloE').val()==="")
-        {
-            $$('.audios').prop('disabled', true);
-            $$('.imagenes').prop('disabled', true);
-        }
-        else
-        {
-            $$('.audios').prop('disabled', false);
-            $$('.imagenes').prop('disabled', false);
-        }
+        });     
         i++;
         $$('.eliminarPaso').on('click',function(){
             var id= parseInt(this.id);
@@ -426,7 +439,7 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
         }
         else
         {
-            app.dialog.alert('El titulo no puede estar vacio',' Error',function(){});
+            app.dialog.alert('El título no puede estar vacío',' Error',function(){});
         }
     });
     $$('#tituloE').on('change',function(){
@@ -453,13 +466,7 @@ $$(document).on('page:init', '.page[data-name="editarEnfermedad"]', function (e)
       }
     });
     var h="e";
-    app.preloader.show();
-  setTimeout(function () {
-         eliminoVacios(h);
-    app.preloader.hide();
-  }, 3000);
-
-    //cargaBusqueda(j);
+    eliminoVacios(h);
 });
 
 $$(document).on('page:init', '.page[data-name="infoEnfermedad"]', function (e) {
@@ -510,9 +517,11 @@ $$(document).on('page:init', '.page[data-name="eliminarCategoria"]', function (e
       }
     });
     var j="elc";
-    eliminoVacios(j);
+    cargaBusqueda(j);
     $$('#volverEliminar').on('click',function(){
          app.popup.close('.popup-eliminarC');
     });
-    $$('#confirmarEliminar').on('click',eliminarCategoria);
+    $$('#confirmarEliminar').on('click',function(){
+        eliminarCategoria();
+    });  
 });

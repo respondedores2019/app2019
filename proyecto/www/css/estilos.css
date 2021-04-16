@@ -64,7 +64,6 @@
     margin-left:auto;
     margin-right:auto;
 }
-
 #tit
 {
     font-size:5vh;
@@ -145,11 +144,17 @@
 .fotos
 {
     padding-left:10vw;
+    font-size: 24px;
 }
 .fotoMostrar
 {
     height: 100%;
     width: 100%;
+}
+img
+{
+    width:60px;
+    height:60px;
 }
 .play
 {
@@ -216,9 +221,4 @@ textarea
     margin-left:50vw;
     color:black;
     font-weight:800;
-}
-img
-{
-    width:50%;
-    height:35%
 }
