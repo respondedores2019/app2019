@@ -15,12 +15,15 @@
             </div>
         </div>
     </div>
-    <div class="page-content">
+    <div class="page-content" style="overflow-y: hidden; overflow-x: hidden;">
         <div class="card" id="card-cat">
-            <div class="card-header" id="tituloCategoria" style="float: left;"><b>Título de categoría:</b></div>
-            <div class="card-content card-content-padding" id="card-titCategoria"> 
+            <div class="card-header row align-items-center justify-content-start no-gutters" id="tituloCategoria"> 
+                <div class="col-sm-1" id="asterisco">*</div>
+                <div class="col-sm-11" id="tituloTexto"><b>Título de categoría:</b></div>
+            </div>
+            <div class="card-content card-content-padding" id="card-titulo"> 
                 <textarea id="titCategoria" cols="40" minlength="1" maxlength="40" required placeholder="Ingrese el título..." autofocus ></textarea>
-                <span class="input-clear-button"></span>
+                <span class="input-clear-button" style="margin-bottom: 10vh;"></span>
                 <div class="text-right mt-1" id="charactersRemaining">
                     <span id="current">0</span>
                     <span id="maximum">/ 40</span>

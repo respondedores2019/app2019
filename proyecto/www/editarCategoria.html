@@ -23,14 +23,15 @@
             <div class="card-content card-content-padding">
             	<div class="row item-input-wrap input-dropdown-wrap">
             		<select id="ediTitC" class="opciones">
-                            <option value="0">Seleccione una categoría</option>
+                            <option value="0" style="padding-right: 3vw;">Seleccione una categoría</option>
             		</select>
             	</div>
-            	<div class="oculto row" id="divNuevoTit">
-                        <br/>
-                        <br/>
-                		<b>Nuevo título:</b>
-                    <div class="card-content card-content-padding row" id="card-titCategoriaEdit">
+            	<div class="oculto row"  id="divNuevoTit">
+                    <div class="row align-items-center justify-content-start no-gutters" style="text-align: left; padding-left: 2vw;">    
+                        <div class="col-sm-1" id="asterisco">*</div>
+                        <div class="col-sm-11" id="tituloTexto"><b>Nuevo título:</b></div>
+                    </div>
+                    <div class="card-content card-content-padding" id="card-titulo" style="float: center; height: 20vh;">
                         <textarea id="titNuevoCat" cols="40" minlength="1" maxlength="40" required placeholder="Ingrese el nuevo título..." autofocus ></textarea>
                 		<span class="input-clear-button"></span>
                         <div class="text-right mt-1" id="charactersRemaining">

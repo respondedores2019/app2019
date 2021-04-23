@@ -53,6 +53,15 @@ buildscript {
     dependencies {
         apply from: '../CordovaLib/cordova.gradle'
 
+        // Import the BoM for the Firebase platform
+        //implementation platform('com.google.firebase:firebase-bom:27.1.0')
+        // Declare the dependency for the Firebase SDK for Google Analytics
+        //implementation 'com.google.firebase:firebase-analytics'
+        //implementation 'com.google.firebase:firebase-auth'
+        //implementation 'com.google.firebase:firebase-firestore'
+        //implementation 'com.google.firebase:firebase-storage'
+        //implementation 'com.google.firebase:firebase-database'
+
         classpath 'com.android.tools.build:gradle:4.0.0'
 
         if (cdvHelpers.getConfigPreference('GradlePluginKotlinEnabled', 'false').toBoolean()) {
@@ -60,7 +69,7 @@ buildscript {
         }
 
         if(cdvHelpers.getConfigPreference('GradlePluginGoogleServicesEnabled', 'false').toBoolean()) {
-            String defaultGradlePluginGoogleServicesVersion = '4.2.0'
+            String defaultGradlePluginGoogleServicesVersion = '4.3.5'
 
             /**
              * Fetches the user's defined Google Services Plugin Version from config.xml.

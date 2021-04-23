@@ -24,7 +24,9 @@
 }
 .popup-eliminar ,.popup-eliminarC
 {
-    margin-top: 60vh;
+    margin-top: 70vh;
+    padding-top: 0%;
+    font-size: 16px;
 }
 .oculto
 {
@@ -72,6 +74,10 @@
     /*font-family: 'Rye', cursive;*/
    font-family: 'Bungee Inline', cursive;
 }
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
 .fondo
 {
     background-color:white;
@@ -91,26 +97,20 @@
   margin-top: 0px;
   margin-right:0px;
   margin-left:0px;
-  margin-bottom:25px;
+  margin-bottom:15px;
   font-size: 30px;
-  height: 85vh;
+  height: 90vh;
 }
 .e
 {
-   /* margin-bottom:100vh;  */
+   /* margin-bottom:100vh; */ 
     padding-top: 5vh;
     padding-right: 3vw;
     padding-left: 5vw;
     text-align: center;
     font-family: 'Rubik', sans-serif;
-    height:60vh;
- /*  background-color:pink;*/
+    height:65vh;
 }
-/*
-.itemsConsulta
-{
-    overflow: visible !important;
-}*/
 .listado
 {
     margin:0px 0px !important;
@@ -125,7 +125,7 @@
 }
 .espacio
 {
-    margin-bottom: 3vh;
+    margin-bottom: 5vh;
 }
 .ceci
 {
@@ -133,18 +133,24 @@
 }
 .po /* swiper*/
 {
-  /*   background-color:yellow;*/
-     height:10vh;
+    /*background-color:yellow;*/
+     height:5vh;
 }
 .lla /*swiper SI HAY IMAGEN*/
 {
-   /* background-color:blue;*/
+    /*background-color:blue;*/
     height:9vh;
+    width: 30vw;
+    padding-left: 13vw;
+    margin-bottom: 2vh;
 }
-.fotos
+.ampliar
 {
-    padding-left:10vw;
-    font-size: 24px;
+    margin-left:8vw;
+    font-size: xx-small;
+    width: 120px;
+    height: 10px;
+    margin-bottom: 8vh;
 }
 .fotoMostrar
 {
@@ -153,8 +159,8 @@
 }
 img
 {
-    width:60px;
-    height:60px;
+    width:70px;
+    height:70px;
 }
 .play
 {
@@ -185,31 +191,41 @@ textarea
      resize: vertical;
      overflow: auto;
      border: 1px solid #ff8833;
-     margin-top: 7vh;
+     margin-top: 2vh;
+     padding-left: 1vw;
 }
 
-#card-titCategoria{
+#card-titulo{
     height: 20vh;
+    float: center;
+}
+#divNuevoTit{
+    padding-top: 3vh;
     float: center;
     text-align: center;
     resize: vertical;
 }
+#charactersRemaining, #charactersRemainingPaso, #charactersRemainingPasoExtra {
+    float: right;
+    padding-right: 1vw;
+    padding-top: 0%;
+    font-size: 0.875rem;
+    text-align: right;
+}
 
-#tituloCategoria::before, #divNuevoTit b::before, #tituloEnfermedad::before, #descPaso::before,#IDaudio::before, #descPasoEdit::before, #IDaudioEdit::before
-{
-    content:"*  ";
+#asterisco{
     color:red;
+    width: 3vw;
     font-weight: bold;
     margin-right: 1vw;
 }
 
-#charactersRemaining, #charactersRemainingPaso, #charactersRemainingPasoExtra {
-    float: right;
-    padding-right: 1vw;
-    font-size: 0.875rem;
-
+#tituloTexto {
+    color: black;
+    width: 40vw;
+    margin-left: 0%;
+    float: left;
 }
-
 #nuevo,#editar,#nuevoC,#editarC,#eliminar,#eliminarC
 {
     text-align:center;
@@ -222,3 +238,29 @@ textarea
     color:black;
     font-weight:800;
 }
+
+#titNuevoCat{
+    margin-top: 0%;
+}
+
+::-webkit-scrollbar {
+   width: 6px; 
+   overflow-x: hidden;
+}
+ 
+::-webkit-scrollbar-track {
+   background: #f1f1f1; 
+   box-shadow: inset 0 0 5px grey; 
+   border-radius: 4px;
+}
+   
+::-webkit-scrollbar-thumb {
+   background: dimgray; 
+   border-radius: 4px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: dimgray; 
+}
+

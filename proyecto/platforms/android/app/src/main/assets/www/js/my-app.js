@@ -351,25 +351,13 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
             $$('#guardarEnfermedad').addClass('disabled');
         }
         countRemainingPaso.innerHTML = `${currentLengthPaso}/${maxLengthPaso}`; 
-    });     
-
-    var audio1 = document.getElementById('audio1');
-
-    audio1.addEventListener('input', function(e) {
-        const targetAudio = e.target;
-        if(targetAudio !== ""){
-            $$('#guardarEnfermedad').removeClass('disabled');
-        }
-        else{
-            $$('#guardarEnfermedad').addClass('disabled');
-        }
-    });       
+    });         
 
     arregloEliminarN=[];
     var i=2;
 
     $$('.masPaso').on('click',function(){
-        $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPaso" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea id="textoenfermedad'+i+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div></div><div class="card-header" id="IDaudio" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen'+i+'">El archivo no puede pesar más de 300kb</div><div class="card-footer"><button class=" button button-small button-outline color-red eli eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+        $$('#agregarpasos').append('<div class="card" id="paso'+i+'"><div class="row align-items-center justify-content-start no-gutters" id="descPaso" style="padding-left: 2vw; padding-top: 3vh;"><div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Paso:</b></div></div><div class="card-content card-content-padding" id="card-titulo"><textarea id="textoenfermedad'+i+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'" >Completar este campo.</div></div><div class="row align-items-center justify-content-start no-gutters" id="IDaudio" style="padding-left: 2vw;padding-top: 3vh;"> <div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Audio:</b></div></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios" name="audio'+i+'" id="audio'+i+'" disabled><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div></div><div class="row" style="padding-left: 10vw; margin-top: 3vh;"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen'+i+'" id="imagen'+i+'" disabled><div class="oculto textoerror" id="errorimagen'+i+'">El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-outline color-red eli eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
         //Validacion PASO EXTRA con x cant de caracteres
         var textEnteredPasoExtra = document.getElementById('textoenfermedad'+i+'');
         var countRemainingPasoExtra = document.getElementById('charactersRemainingPasoExtra');
@@ -387,7 +375,18 @@ $$(document).on('page:init', '.page[data-name="nuevaEnfermedad"]', function (e) 
                 $$('#guardarEnfermedad').addClass('disabled');
             }    
             countRemainingPasoExtra.innerHTML = `${currentLengthPasoExtra}/${maxLengthPasoExtra}`; 
-        });     
+        });    
+
+        if($$('#tituloE').val()==="")
+        {
+            $$('.audios').prop('disabled', true);
+            $$('.imagenes').prop('disabled', true);
+        }
+        else
+        {
+            $$('.audios').prop('disabled', false);
+            $$('.imagenes').prop('disabled', false);
+        }
         i++;
         $$('.eliminarPaso').on('click',function(){
             var id= parseInt(this.id);
@@ -478,7 +477,9 @@ $$(document).on('page:init', '.page[data-name="editarEnfermedad"]', function (e)
       }
     });
     var h="e";
-    eliminoVacios(h);
+    cargaBusqueda(h);
+    //var h="e";
+    //eliminoVacios(h);
 });
 
 $$(document).on('page:init', '.page[data-name="infoEnfermedad"]', function (e) {

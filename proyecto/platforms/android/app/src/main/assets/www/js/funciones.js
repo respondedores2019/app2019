@@ -17,14 +17,12 @@ function validarInfo(info)
              {
                   if(document.getElementById('audio'+jj).files.length === 0)
                  {
-                    $$('#erroraudio'+jj).removeClass('oculto');
-                    $$('#erroraudio'+jj).addClass('visible');
+                    $$('#erroraudio'+jj).removeClass('oculto').addClass('visible');
                 }
                 else
                 {
                     fileValidation(jj);
-                    $$('#erroraudio'+jj).removeClass('visible');
-                    $$('#erroraudio'+jj).addClass('oculto');
+                    $$('#erroraudio'+jj).removeClass('visible').addClass('oculto');
                 }
              }
              else
@@ -33,8 +31,8 @@ function validarInfo(info)
                 {
                     fileValidation(jj);
                 }
-             }
-        }
+             }     
+        }   
     }
 }
 function guardarEditar(info,catV,catN)
@@ -51,21 +49,21 @@ function guardarEditar(info,catV,catN)
         {
             var aa=String(ii);
             enf.collection('Pasos').doc(aa).delete()
-            .then(function(doc) {
+            .then(function() {
                 console.log("se borro pa");
             })
             .catch(function(error){
                 console.log('Error al eliminar pasos ',error);
             });
             enf.collection('Audios').doc(aa).delete()
-            .then(function(doc) {
+            .then(function() {
                  console.log("se borro au ");
             })
             .catch(function(error){
                  console.log('Error al eliminar audios',error);
             });
             enf.collection('Imagenes').doc(aa).delete()
-            .then(function(doc) {
+            .then(function() {
                  console.log("se borro im ");
             })
             .catch(function(error){
@@ -281,7 +279,7 @@ function cargarInfoEnfermedad(info)
                         arregloImagenes.splice(num,0,doc.data().valor);
                     });
 
-                    $$('#tituloEditar').append('<div class="card-header"><b>Titulo</b></div><div class="card-content card-content-padding"><div class="row"><input type="text" id="tituloE" class="colorFondo col-75" value="'+info+'" disabled/></div></br><div class="row"><b>Categoria:</b></br><div class="item-input-wrap input-dropdown-wrap"><select id="idCat"></select></div></div></div>');
+                    $$('#tituloEditar').append('<div class="card-header"><b>Título</b></div><div class="card-content card-content-padding" style="padding-left: 5vw;"><div class="card-content"><input type="text" id="tituloE" style="padding-left:1vw;" class="colorFondo" value="'+info+'" disabled/></div></br><div class="card-content" style="padding-left: 5vw; float:center;"><b>Categoria:</b></br><div class="item-input-wrap input-dropdown-wrap" style="margin-right:5vw"><select id="idCat"></select></div></div></div>');
                     bd.collection('catalogo').get()
                     .then(function(querySnapshot){
                         querySnapshot.forEach(function(doc){
@@ -301,7 +299,7 @@ function cargarInfoEnfermedad(info)
                         var i=j+1;
                         if(arregloImagenes[j]===undefined)
                         {
-                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPasoEdit" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-85" disabled minlength="1" maxlength="170" required>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPaso"><span id="current">'+arregloPasos[j].length+'</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'">Completar este campo.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10 visible" ><i class="fas fa-edit"></i></a></div></div><div class="card-header" id="IDaudioEdit" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-small button-fill color-orange" id="audbot'+i+'" value="'+arregloPasos[j]+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menos a 500kb.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-outline color-red eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="row align-items-center justify-content-start no-gutters" id="descPasoEdit" style="padding-left: 5vw; padding-top: 3vh;"><div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Paso:</b></div></div><div class="card-content card-content-padding" id="card-titulo"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-sm-1" disabled minlength="1" maxlength="170" required>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPaso"><span id="current">'+arregloPasos[j].length+'</span><span id="maximum"> / 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'">Completar este campo.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-sm-1 visible" style="padding-left:0%"><i class="fas fa-edit"></i></a></div></div><div class="row align-items-center justify-content-start no-gutters" id="IDaudioEdit" style="padding-left: 5vw;padding-top: 3vh;"> <div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Audio:</b></div></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'" class="audioPrueba"></audio><button class="col-75 playEditar button button-small button-fill color-orange" id="audbot'+i+'" value="'+arregloPasos[j]+'" style="width: 30vw;">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menos a 500kb.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-sm-1 visible" style="padding-left:0%;"><i class="fas fa-edit"></i></a></div></div><div class="row" style="padding-left: 10vw; margin-top: 3vh;"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes visible" name="imagen'+i+'" id="imagen'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-outline color-red eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
                             //Validacion PASO con x cant de caracteres
                             var textEnteredPaso = document.getElementById('textoPaso'+i+'');
                             var countRemainingPaso = document.getElementById('charactersRemainingPaso');
@@ -318,7 +316,7 @@ function cargarInfoEnfermedad(info)
                         }
                         else
                         {
-                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="card-header" id="descPasoEdit" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding row"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-85" disabled minlength="1" maxlength="170" required>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPaso"><span id="current">'+arregloPasos[j].length+'</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'">Completar este campo.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-10 visible" ><i class="fas fa-edit"></i></a></div></div><div class="card-header" id="IDaudioEdit" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding row"><input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'"></audio><button class="col-75 playEditar button button-small button-fill color-orange" id="audbot'+i+'" value="'+arregloPasos[j]+'">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-10 visible" ><i class="fas fa-edit"></i></a> </div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding row"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes oculto" name="imagen'+i+'" id="imagen'+i+'"><img src="'+arregloImagenes[j]+'" id="imgrep'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div><div class="item-media visible"  id="botoneditarImg'+i+'"><a href="#" id="imgedi'+i+'" class="editarImagen col-10 "><i class="fas fa-edit"></i></a></div><div class="item-media visible"  id="botonelImg'+i+'"><a href="#" id="imgel'+i+'" class="eliminarImagen col-10 "><i class="fas fa-trash-alt"></i></a></div></div><div class="card-footer"><button class=" button button-small button-outline color-red eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
+                            $$('#pasosEditar').append('<div class="card" id="paso'+i+'"><div class="row align-items-center justify-content-start no-gutters" id="descPasoEdit" style="padding-left: 5vw; padding-top: 3vh;"><div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Paso:</b></div></div><div class="card-content card-content-padding" id="card-titulo"><textarea id="textoPaso'+i+'" value="'+arregloPasos[j]+'" class="colorFondo col-sm-1" disabled minlength="1" maxlength="170" required>'+arregloPasos[j]+'</textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPaso"><span id="current">'+arregloPasos[j].length+'</span><span id="maximum"> / 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+i+'">Completar este campo.</div><div class="item-media"><a href="#" id="edi'+i+'" class="editar col-sm-1 visible" style="padding-left:0%"><i class="fas fa-edit"></i></a></div></div><div class="row align-items-center justify-content-start no-gutters" id="IDaudioEdit" style="padding-left: 5vw;padding-top: 3vh;"> <div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Audio:</b></div></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios oculto" name="audio'+i+'" id="audio'+i+'"><audio src="'+arregloAudios[j]+'" id="audrep'+i+'" class="audioPrueba"></audio><button class="col-75 playEditar button button-small button-fill color-orange" id="audbot'+i+'" value="'+arregloPasos[j]+'" style="width: 30vw;">Reproducir</button><div class="oculto textoerror" id="erroraudio'+i+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+i+'" >El archivo debe ser menor a 500kb.</div><div class="item-media"><a href="#" id="audedi'+i+'" class="editarAudio col-sm-1 visible" style="padding-left:0%;"><i class="fas fa-edit"></i></a></div></div><div class="row" style="padding-left: 10vw; margin-top: 3vh;"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes oculto" name="imagen'+i+'" id="imagen'+i+'"><img src="'+arregloImagenes[j]+'" id="imgrep'+i+'"><div class="oculto textoerror" id="errorimagen'+i+'" >El archivo no puede pesar más de 300kb</div><div class="row align-items-center justify-content-start no-gutters"><div class="item-media col visible" id="botoneditarImg'+i+'" style="margin-right:75vw;"><a href="#" id="imgedi'+i+'" class="editarImagen style="padding-left:0%;float:left;"><i class="fas fa-edit"></i></a></div><div class="item-media col visible"  id="botonelImg'+i+'"><a href="#" id="imgel'+i+'" class="eliminarImagen"><i class="fas fa-trash-alt"></i></a></div></div></div><div class="card-footer"><button class=" button button-small button-outline color-red eliminarPaso" id="'+i+'">Eliminar paso</button></div></div>');
                             //Validacion PASO con x cant de caracteres
                             var textEnteredPaso = document.getElementById('textoPaso'+i+'');
                             var countRemainingPaso = document.getElementById('charactersRemainingPaso');
@@ -360,7 +358,7 @@ function cargarInfoEnfermedad(info)
                     });
 
                     $$('#masPaso').on('click',function(){
-                        $$('#pasosEditar').append('<div class="card" id="paso'+nroNuevoPasoE+'"><div class="card-header" id="descPasoEdit" style="float: left;"><b>Paso:</b></div><div class="card-content card-content-padding"><textarea id="textoPaso'+nroNuevoPasoE+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum">/ 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+nroNuevoPasoE+'" >Completar este campo.</div></div><div class="card-header" id="IDaudioEdit" style="float: left;"><b>Audio:</b></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios nuevoPaso" name="audio'+nroNuevoPasoE+'" id="audio'+nroNuevoPasoE+'"><div class="oculto textoerror" id="erroraudio'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+nroNuevoPasoE+'" >El archivo debe ser menor a 500kb.</div></div><div class="card-header"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes nuevoPaso" name="imagen'+nroNuevoPasoE+'" id="imagen'+nroNuevoPasoE+'"><div class="oculto textoerror" id="errorimagen'+nroNuevoPasoE+'" >El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-outline color-red eli eliminarPaso" id="'+nroNuevoPasoE+'">Eliminar paso</button></div></div>');
+                        $$('#pasosEditar').append('<div class="card" id="paso'+nroNuevoPasoE+'"><div class="row align-items-center justify-content-start no-gutters" id="descPasoEdit" style="padding-left: 2vw; padding-top: 3vh;"><div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Paso:</b></div></div><div class="card-content card-content-padding" id="card-titulo"><textarea id="textoPaso'+nroNuevoPasoE+'" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus></textarea><span class="input-clear-button"></span><div class="text-right mt-1" id="charactersRemainingPasoExtra"><span id="current">0</span><span id="maximum"> / 170</span></div><div class="oculto textoerror" id="errortextoenfermedad'+nroNuevoPasoE+'" >Completar este campo.</div></div><div class="row align-items-center justify-content-start no-gutters" id="IDaudioEdit" style="padding-left: 2vw;padding-top: 3vh;"><div class="col-sm-1" id="asterisco">*</div><div class="col-sm-11" id="tituloTexto"><b>Audio:</b></div></div><div class="card-content card-content-padding"><input type="file" accept="audio/mpeg, audio/mp3" class="audios nuevoPaso" name="audio'+nroNuevoPasoE+'" id="audio'+nroNuevoPasoE+'"><div class="oculto textoerror" id="erroraudio'+nroNuevoPasoE+'" >Completar este campo.</div><div class="oculto textoerror" id="error3audio'+nroNuevoPasoE+'" >El archivo debe ser menor a 500kb.</div></div><div class="row" style="padding-left: 10vw; margin-top: 3vh;"><b>Imagen:</b></div><div class="card-content card-content-padding"><input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes nuevoPaso" name="imagen'+nroNuevoPasoE+'" id="imagen'+nroNuevoPasoE+'"><div class="oculto textoerror" id="errorimagen'+nroNuevoPasoE+'" >El archivo no puede pesar más de 300kb</div></div><div class="card-footer"><button class=" button button-small button-outline color-red eli eliminarPaso" id="'+nroNuevoPasoE+'">Eliminar paso</button></div></div>');
                         var textEnteredPasoExtra = document.getElementById('textoPaso'+nroNuevoPasoE+'');
                         var countRemainingPasoExtra = document.getElementById('charactersRemainingPasoExtra');
                 
@@ -398,6 +396,15 @@ function cargarInfoEnfermedad(info)
                             button.textContent = "Reproducir";
                         }
                     });
+                    $$('.audioPrueba').on('playing',function(){
+
+                    });
+                    $$('.audioPrueba').on('ended',function(){
+                       var num=this.id.substr(6);
+                       var button = document.getElementById('audbot'+num);
+                       button.textContent = "Reproducir";
+                    });
+                    
                     $$('.editar').on('click',function(){
                         var num=this.id.substr(3);
                         $$('#textoPaso'+num).prop('disabled', false).removeClass('colorFondo');
@@ -456,8 +463,7 @@ function nuevaEnfermedad(i)
     enf.get()
     .then(function(doc){
         if(!doc.exists)
-        {
-            if(tipo==1) // es una subcategoria
+        {   if(tipo==1) // es una subcategoria
             {
                 var cat=$$('#idCat').val();
                 var catalogo=bd.collection('catalogo').doc(cat);
@@ -467,6 +473,7 @@ function nuevaEnfermedad(i)
                     var cant={
                         cantidad:cc
                     };
+                    
                     catalogo.update(cant);
                     doc.data().Titulos.forEach(function(element){
                         arre.push(element);
@@ -500,20 +507,21 @@ function nuevaEnfermedad(i)
                 if(arregloEliminarN.indexOf(j)===-1) // noesta en el arreglo
                 {
                     var paso=$$('#textoenfermedad'+j).val();
-                    var url=document.getElementById('audio'+j).files[0];
-                    getFileName(url,cont,titulo);
-                    if(document.getElementById('imagen'+j).files.length !== 0)
-                    {
-                        var foto=document.getElementById('imagen'+j).files[0];
-                        getFileFoto(foto,cont,titulo);
-                    }
                     var data1={
                         valor:paso,
                     };
                     var nroDoc=String(cont);
-                    bd.collection('subcatalogo').doc(mayTitulo).collection('Pasos').doc(nroDoc).set(data1).then(function() {
-                        console.log("Document successfully written!");
-                    });
+                    bd.collection('subcatalogo').doc(mayTitulo).collection('Pasos').doc(nroDoc).set(data1);
+                    console.log("Paso cargado");
+
+                    var audio = document.getElementById('audio'+j).files[0];
+                    getFileName(audio,cont,mayTitulo);
+
+                    if(document.getElementById('imagen'+j).files.length !== 0)
+                    {
+                        var foto = document.getElementById('imagen'+j).files[0];
+                        getFileFoto(foto,cont,mayTitulo);
+                    }  
                     cont++;
                 }
             }
@@ -521,6 +529,7 @@ function nuevaEnfermedad(i)
                 cantidad:cont-1
             };
             bd.collection('subcatalogo').doc(mayTitulo).set(data11);
+            console.log("Nueva enfermedad creada");
             app.dialog.alert('Se ha cargado una nueva enfermedad', 'Confirmación',function()
             {
                 mainView.router.navigate("/homeAdmin/");
@@ -528,71 +537,58 @@ function nuevaEnfermedad(i)
         }
         else
         {
-            app.dialog.alert('Ya existe una enfermedad con ese nombre','Error!');
+            app.dialog.alert('Ya existe una enfermedad con ese nombre','Error');
         }
     });
 }
-function getFileFoto(fileInput,cont,titulo2)
+function getFileName(fileInput,cont,mayTitulo)
 {
-    var storageService = firebase.storage();
-    var bd=firebase.firestore();
-    var titulo=titulo2;
-    var minu=titulo.toLowerCase();
-    var mayTitulo=minu.charAt(0).toUpperCase() + minu.slice(1);
-    var enf=bd.collection('subcatalogo').doc(mayTitulo);
-    enf.get()
-    .then(function(doc){
-        var file = fileInput;
-        var fileName2 = file.name;
-        var fileName=fileName2.replace(/ /g,"");
-        var storageRef = storageService.ref();
-        var lal=storageRef.child(mayTitulo+'/'+fileName)
-        var uploadTask = lal.put(file);
-        uploadTask.on('state_changed',null,function(error){
-            console.log('Error al subir archivo',error)
-        }, function(){
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
-                var data={
-                    valor:downloadURL,
-                };
-                var nroDoc=String(cont);
-                bd.collection('subcatalogo').doc(mayTitulo).collection('Imagenes').doc(nroDoc).set(data).then(function() {
-                    console.log("Document successfully written!");
-                });
+    var fileName = fileInput.name;
+    let storage = firebase.storage();
+    var storageRef = storage.ref();
+    var bd= firebase.firestore();
+    console.log(fileInput);
+    
+    var uploadTask =  storageRef.child(mayTitulo+'/'+fileName).put(fileInput, {contentType: fileInput.type});
+
+    uploadTask.on('state_changed',null,function(error){
+        console.log('Error al subir audio',error)
+    }, function(){
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
+            var data={
+                valor:downloadURL,
+            };
+            var nroDoc=String(cont);
+            bd.collection('subcatalogo').doc(mayTitulo).collection('Audios').doc(nroDoc).set(data).then(function() {
+                console.log("Audio cargado");
             });
-            console.log("subida completa");
         });
     });
 }
-function getFileName(fileInput,cont,titulo)
+    
+function getFileFoto(fileInput,cont,mayTitulo)
 {
-    var storageService = firebase.storage();
+    let storage = firebase.storage();
     var bd=firebase.firestore();
-    var minu=titulo.toLowerCase();
-    var mayTitulo=minu.charAt(0).toUpperCase() + minu.slice(1);
-    var enf=bd.collection('subcatalogo').doc(mayTitulo);
-    enf.get()
-    .then(function(doc){
-        var file = fileInput;
-        var fileName = file.name;
-        var storageRef = storageService.ref();
-        var lal=storageRef.child(mayTitulo+'/'+fileName)
-        var uploadTask = lal.put(file);
+    var fileName2 = fileInput.name;
+    var fileName=fileName2.replace(/ /g,"");
+    var storageRef = storage.ref();
+    console.log(fileInput);
+    var uploadTask =  storageRef.child(mayTitulo+'/'+fileName).put(fileInput, {contentType: fileInput.type});
+
         uploadTask.on('state_changed',null,function(error){
-            console.log('Error al subir archivo',error)
+            console.log('Error al subir imagen',error)
         }, function(){
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
                 var data={
-                    valor:downloadURL,
+                    valor:downloadURL
                 };
                 var nroDoc=String(cont);
-                bd.collection('subcatalogo').doc(mayTitulo).collection('Audios').doc(nroDoc).set(data).then(function() {
-                    console.log("Document successfully written!");
+                bd.collection('subcatalogo').doc(mayTitulo).collection('Imagenes').doc(nroDoc).set(data).then(function() {
+                    console.log("Imagen cargada");
                 });
             });
-            console.log("subida completa");
         });
-    });
 }
 function cerrarSesion()
 {
@@ -602,7 +598,7 @@ function cerrarSesion()
         $$('#menu1').removeClass('oculto').addClass('visible');
         mainView.router.navigate("/index/");
      })
-     .catch(function(error){
+     .catch(function(){
            console.log("error al cerrar sesion");
      });
 }
@@ -617,18 +613,14 @@ function iniciarSesion()
          mainView.router.navigate("/homeAdmin/");
     })
     .catch(function(error) {
-
         var errorCode = error.code;
-        var errorMessage = error.message;
         // [START_EXCLUDE]
-        if (errorCode === 'auth/wrong-password')
-        {
-            app.dialog.alert('Clave invalida','Inicio de sesion');
+        if (errorCode === 'auth/wrong-password'){
+            app.dialog.alert('Clave incorrecta','Inicio de sesión');
         }
-        else
-        {
+        else {
             //alert(errorMessage);
-            app.dialog.alert('Mail invalido','Inicio de sesion');
+            app.dialog.alert('Mail inválido','Inicio de sesión');
         }
     });
 }
@@ -637,18 +629,17 @@ function olvidoClave()
     var email=$$('#email').val();
     firebase.auth().sendPasswordResetEmail(email)
     .then(function() {
-        app.dialog.alert('Se ha enviado el mail de recuperación de la cuenta','Inicio de sesion');
+        app.dialog.alert('Se ha enviado el mail de recuperación de la cuenta','Inicio de sesión');
         mainView.router.navigate("/iniciarSesion/");
     })
     .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
-        var errorMessage = error.message;
         // [START_EXCLUDE]
         if (errorCode === 'auth/invalid-email') {
-          app.dialog.alert('Mail invalido','Inicio de sesion');
+          app.dialog.alert('Mail inválido','Inicio de sesión');
         } else if (errorCode === 'auth/user-not-found') {
-            app.dialog.alert('Usuario no encontrado','Inicio de sesion');
+            app.dialog.alert('Usuario no encontrado','Inicio de sesión');
         }
         console.log(error);
         // [END_EXCLUDE]
@@ -749,7 +740,6 @@ function cargaBusqueda(h)
 {
     var bd=firebase.firestore();
     bd.collection('catalogo').get()
-    // bd.collection('catalogo')
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc){
           //.onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
@@ -761,7 +751,7 @@ function cargaBusqueda(h)
                 {
                     if(doc.data().Titulos[0] !==doc.id)
                     {  //si el nombre del boton es muy grande, que se achique la letra
-                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"  style="overflow-y: auto;"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');
+                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');
                         $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                             doc.data().Titulos.forEach(function(element){
 
@@ -770,12 +760,12 @@ function cargaBusqueda(h)
                     }
                     else
                     {
-                         $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner" style="overflow-y: auto;"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminar"   id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                         $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminar"   id="'+doc.id+'">'+doc.id+'</button></div></li>');
                     }
                 }
                 else
                 {
-                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"  style="overflow-y: auto;"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');
+                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'" >'+doc.id+'</button></div></li>');
                     $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                     doc.data().Titulos.forEach(function(element){
 
@@ -785,7 +775,7 @@ function cargaBusqueda(h)
             }
             else if(h==="elc")
             {
-                 $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"  style="overflow-y: auto;"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminarC"   id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                 $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta popup-open"  data-popup=".popup-eliminarC"   id="'+doc.id+'">'+doc.id+'</button></div></li>');
             }
             else
             {
@@ -793,7 +783,7 @@ function cargaBusqueda(h)
                 {
                     if(doc.data().Titulos[0] !==doc.id)
                     {
-                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"  style="overflow-y: auto;"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
                         $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                         doc.data().Titulos.forEach(function(element){
                             $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
@@ -801,12 +791,12 @@ function cargaBusqueda(h)
                     }
                     else
                     {
-                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"  style="overflow-y: auto;"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                        $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button value="'+doc.id+'" class="col button button-raised item-title itemsConsulta"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
                     }
                 }
                 else
                 {
-                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"  style="overflow-y: auto;"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
+                    $$('#listadoConsulta').append('<li class="item-content"><div class="item-inner"><button class="col button button-raised item-title popover-open" href="#" data-popover=".popover-links'+doc.id+'"  id="'+doc.id+'">'+doc.id+'</button></div></li>');
                     $$('#escondido').append('<div class="popover popover-links'+doc.id+'"><div class="popover-inner"><div class="list"><ul id="popover-busqueda'+doc.id+'"></ul></div></div></div>');
                     doc.data().Titulos.forEach(function(element){
                         $$('#popover-busqueda'+doc.id).append('<li><button value="'+doc.id+'" class="col button button-raised itemsConsulta item-link popover-close"  id="'+element+'">'+element+'</button></li>');
@@ -1025,19 +1015,19 @@ function cargarEnfermedad(enfermedad)
                         var kk=j+1;
                         if(arregloPasos.length===1)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'"><img id="visor" src="'+arregloImagenes[j]+'">Ampliar foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e" style="height: 55vh"><b>'+arregloPasos[j]+'</b></div><div class="lla"><img id="visor" src="'+arregloImagenes[j]+'"></div><div class="ampliar"><a href="#" class="button button-small button-outline color-red fotos" id="fot'+j+'">Ampliar foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
                         }
                         else if(j===0)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'"><img id="visor" src="'+arregloImagenes[j]+'">Ampliar foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e" style="height: 55vh"><b>'+arregloPasos[j]+'</b></div><div class="lla"><img id="visor" src="'+arregloImagenes[j]+'"></div><div class="ampliar"><a href="#" class="button button-small button-outline color-red fotos" id="fot'+j+'">Ampliar foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio><button class="play button button-fill " id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>');
                         }
                         else if(kk===arregloPasos.length)
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"><a href="#" class="fotos" id="visor"><img id="fot'+j+'" src="'+arregloImagenes[j]+'">Ampliar foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e" style="height: 55vh"><b>'+arregloPasos[j]+'</b></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="lla"><img id="visor" src="'+arregloImagenes[j]+'"></div><div class="ampliar"><a href="#" class="button button-small button-outline color-red fotos" id="fot'+j+'">Ampliar foto</a></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba" ></audio><button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div></div>');
                         }
                         else
                         {
-                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e"><b>'+arregloPasos[j]+'</b></div><div class="lla"><a href="#" class="fotos" id="fot'+j+'"><img id="visor" src="'+arregloImagenes[j]+'">Ampliar foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
+                            mySwiper.appendSlide('<div class="swiper-slide"><div class="e" style="height: 55vh"><b>'+arregloPasos[j]+'</b></div><div class="lla"><img id="visor" src="'+arregloImagenes[j]+'"></div><div class="ampliar"><a href="#" class="button button-small button-outline color-red fotos" id="fot'+j+'">Ampliar foto</a></div><div class="swiper-button-prev prev" id="'+j+'"></div><div class="po"><audio id="audrep'+j+'" src="'+arregloAudios[j]+'" class="audioPrueba"></audio> <button class="play button button-fill" id="botonn'+j+'" value="'+arregloPasos[j]+'">Reproducir</button></div><div class="swiper-button-next next" id="'+j+'"></div></div>   ');
                         }
                     }
                 }
@@ -1106,7 +1096,7 @@ function fileValidation(file)
 {
     var fileInput = document.getElementById("audio"+file);
     var filePath = fileInput.value;
-    var allowedExtensions = /(.mp3)$/i;
+    var allowedExtensions = /(.mp3|.mpeg)$/i;
     if(!allowedExtensions.exec(filePath))
     {
         $$('#error3audio'+file).removeClass('visible').addClass('oculto');
@@ -1207,3 +1197,27 @@ function downloadFileFromServer(fileServerURL){
         console.log(e);
     }
 }
+async function asyncCall() {
+    console.log('calling');
+    const result = await resolveAfter2minute();
+    console.log(result);
+    // expected output: "resolved"
+}
+  
+function resolveAfter2minute() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 120000);
+    });
+}
+/*
+function setMaxUploadRetryTimeMillis(nro){
+    maxTransferRetryMillis = nro
+}
+function setMaxDownloadRetryTimeMillis(nro){
+    maxTransferRetryMillis = nro
+}
+function setMaxOperationRetryTimeMillis(nro){
+    maxTransferRetryMillis = nro
+}*/

@@ -21,6 +21,7 @@
         <!-- Your app title -->
         <title>Primeros respondedores</title>
         <!-- Path to Framework7 Library CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="lib/framework7/css/framework7.min.css">
         <!-- Path to your custom app styles-->
         <link rel="stylesheet" href="css/styles.css">
@@ -36,7 +37,7 @@
                 <div class="block visible" id="menu1">
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-home" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/home/" class="panel-close">Home</a>
@@ -44,7 +45,7 @@
                     </div>
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="fas fa-link"></i>
+                           <i class="fas fa-link" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="" class="panel-close manualUsuario">Manual de primeros auxilios y prevención de lesiones</a>
@@ -52,7 +53,7 @@
                     </div>
                       <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="far fa-id-badge"></i>
+                           <i class="far fa-id-badge" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/iniciarSesion/" class="panel-close">Administrador</a>
@@ -62,7 +63,7 @@
                    <div class="block oculto" id="menu2">
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-home" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/home/" class="panel-close">Home</a>
@@ -70,7 +71,7 @@
                     </div>
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                            <i class="fas fa-cog"></i>
+                            <i class="fas fa-cog" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="/homeAdmin/" class="panel-close">Configuración</a>
@@ -79,7 +80,7 @@
 
                     <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="fas fa-link"></i>
+                           <i class="fas fa-link" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="" class="panel-close manualUsuario">Manual de primeros auxilios y prevención de lesiones</a>
@@ -87,7 +88,7 @@
                     </div>
                       <div class="row espacio">
                         <div class="col-20 item-media">
-                           <i class="far fa-id-badge"></i>
+                           <i class="far fa-id-badge" style="margin-left: 6vw;"></i>
                         </div>
                         <div class="col-80 item-media">
                             <a href="#" class="panel-close cerrar">Cerrar sesión</a>
@@ -118,7 +119,7 @@
                 </div>-->
 
                 <!-- Scrollable page content -->
-                    <div class="page-content fondo" >
+                    <div class="page-content fondo" style="overflow-y: hidden; overflow-x: hidden;" >
                         <div>
                              <!--<p id="tit">Primeros Respondedores</p> -->
                             <a href="/home/" data-view=".page-content">
@@ -135,13 +136,13 @@
     <script type="text/javascript" src="js/funciones.js"></script>
      <script defer src="js/all.js"></script>
  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 
   <!-- Add Firebase products that you want to use -->
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
 
 <script>
   // Your web app's Firebase configuration

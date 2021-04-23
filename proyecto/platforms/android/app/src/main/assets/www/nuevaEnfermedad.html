@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="page-content">
+    <div class="page-content" style="overflow-x: hidden;">
         <div id="agregarpasos">
             <div class="card">
                 <div class="card-header"><b>¿Pertenece a una categoría?</b></div>
@@ -35,8 +35,11 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header" id="tituloEnfermedad" style="float: left;"><b>Título</b></div>
-                <div class="card-content card-content-padding">
+                <div class="card-header row align-items-center justify-content-start no-gutters" id="tituloEnfermedad"> 
+                    <div class="col-sm-1" id="asterisco">*</div>
+                    <div class="col-sm-11" id="tituloTexto"><b>Título</b></div>
+                </div>
+                <div class="card-content card-content-padding" id="card-titulo">
                     <textarea id="tituloE" minlength="1" maxlength="40" required placeholder="Ingrese el título..." autofocus ></textarea>
                     <span class="input-clear-button"></span>
                     <div class="text-right mt-1" id="charactersRemaining">
@@ -47,8 +50,11 @@
                 </div>
             </div>
             <div class="card" id="paso1">
-                <div class="card-header" id="descPaso" style="float: left;"><b>Paso:</b></div>
-                <div class="card-content card-content-padding">
+                <div class="row align-items-center justify-content-start no-gutters" id="descPaso" style="padding-left: 2vw; padding-top: 3vh;"> 
+                    <div class="col-sm-1" id="asterisco">*</div>
+                    <div class="col-sm-11" id="tituloTexto"><b>Paso:</b></div>
+                </div>
+                <div class="card-content card-content-padding" id="card-titulo">
                     <textarea id="textoenfermedad1" minlength="1" maxlength="170" required placeholder="Ingrese el texto del paso..." autofocus ></textarea>
                     <span class="input-clear-button"></span>
                     <div class="text-right mt-1" id="charactersRemainingPaso">
@@ -57,16 +63,19 @@
                     </div>
                     <div class="oculto textoerror" id="errortextoenfermedad1" >Completar este campo.</div>
                 </div>
-                <div class="card-header" id="IDaudio" style="float: left;"><b>Audio:</b></div>
+                <div class="row align-items-center justify-content-start no-gutters" id="IDaudio" style="padding-left: 2vw;padding-top: 3vh;"> 
+                    <div class="col-sm-1" id="asterisco">*</div>
+                    <div class="col-sm-11" id="tituloTexto"><b>Audio:</b></div>
+                </div>
                 <div class="card-content card-content-padding">
                     <input type="file" accept="audio/mpeg, audio/mp3" max-size="491520" class="audios" name="audio1" id="audio1" required disabled >
                     <div class="oculto textoerror" id="erroraudio1" >Completar este campo.</div>
                     <div class="oculto textoerror" id="error3audio1" >El archivo debe ser menor a 500kb</div>
                 </div>
-                <div class="card-header"><b>Imagen:</b></div>
+                <div class="row" style="padding-left: 10vw; margin-top: 3vh;"><b>Imagen:</b></div>
                 <div class="card-content card-content-padding">
                     <input type="file" accept="image/png, image/jpeg, image/jpg" class="imagenes" name="imagen1" id="imagen1" disabled>
-                    <div class="oculto textoerror" id="errorimagen" >El archivo no puede pesar más de 300kb</div>
+                    <div class="oculto textoerror" id="errorimagen1" >El archivo no puede pesar más de 300kb</div>
                 </div>
                 <div class="card-footer">
                     <button class=" button button-small button-outline color-red eliminarPaso" id="1">Eliminar paso</button>
